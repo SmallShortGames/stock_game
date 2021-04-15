@@ -1,14 +1,27 @@
 from flask import Flask
+from flask_cors import CORS
 
-def create_app(test_config=None):
-    app = Flask(__name__, static_url_path='/')
-    app.url_map.strict_slashes = False
-    app.config.from_mapping(
-        SECRET_KEY='noone_knows'
-    )
 
-    @app.route('/hello')
-    def hello():
-        return 'test connect'
+app = Flask(__name__)
+CORS(app)
 
-    return app
+@app.route('/hello')
+def hello():
+    return {'key':"value"}
+
+@app.route('/buy')
+def buy():
+    return
+
+@app.route('/viewstock')
+def viewstock():
+    return
+
+@app.route('/viewdefinition')
+def viewdef(term):
+    return
+
+@app.route('/login')
+def login(username, password):
+    return
+
