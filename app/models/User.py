@@ -5,7 +5,7 @@ from sqlalchemy.orm import validates
 
 class User(Base):
     __tablename__ = 'user'
-    user_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     username = Column(String(50), nullable=False)
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(50), nullable=False)
