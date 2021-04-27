@@ -3,14 +3,16 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
 from sqlalchemy.orm import validates
 
+sector_list = 'Communication Services', 'Consumer Discretionary', 'Consumer Staples', 'Energy', 'Financials', 'Healthcare', 'Industrials', 'Information Technology', 'Materials', 'Real Estate', 'Utilities'
+
 class Company(Base):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True)
     company_name = Column(String(30), nullable=False)
     website = Column(String(100))
     ticker = Column(String(5), nullable=False)
-    industry = Column(Enum(50))
-    sector = Column(Enum(50))
+    industry = Column(Enum(industry_list, name="industry"), default="")
+    sector = Column(Enum(sector_list, name="Sector"), default="Communication Services")
     ipo_date = Column(Date)
     last_price = Column(Numeric(8,2))
     volatility = Column(Integer)
