@@ -1,9 +1,17 @@
 from flask import Flask
 from flask_cors import CORS
 from markupsafe import escape
+from config import Development
+from app.db import db, Session
+from app.models import User, Portfolio, Position, Company
 
 app = Flask(__name__)
 CORS(app)
+app.config.from_object(Development)
+
+database = Session()
+
+User.metadata.create_all(bind=db)
 
 @app.route('/hello')
 def hello():

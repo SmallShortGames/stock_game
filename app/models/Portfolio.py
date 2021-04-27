@@ -1,6 +1,6 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Numeric
 from sqlalchemy.orm import validates
 
 class Portfolio(Base):
