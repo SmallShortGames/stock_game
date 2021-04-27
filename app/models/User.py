@@ -1,12 +1,12 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Numeric
 from sqlalchemy.orm import validates
 from werkzeug.security import generate_password_hash
 
 class User(Base):
     __tablename__ = 'user'
-    user_id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True)
     username = Column(String(50), nullable=False)
     email = Column(String(50), nullable=False, unique=True)
     password = Column(String(50), nullable=False)
