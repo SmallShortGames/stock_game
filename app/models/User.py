@@ -1,7 +1,8 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String, DateTime, Numeric
 from sqlalchemy.orm import validates
+from werkzeug.security import generate_password_hash
 
 class User(Base):
     __tablename__ = 'user'
@@ -25,6 +26,6 @@ class User(Base):
     def validate_password(self, key, password):
         assert len(password) > 6
 
-        return password
+        return generate_password_hash(password)
 
 

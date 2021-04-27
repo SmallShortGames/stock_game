@@ -1,6 +1,6 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
 from sqlalchemy.orm import validates
 
 class Company(Base):
