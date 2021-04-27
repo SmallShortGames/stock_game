@@ -10,7 +10,7 @@ class Position(Base):
     volume = Column(Numeric(15,2)) 
     current_cost = Column(Numeric(15,2))
     avg_cost = Column(Numeric(15,2))
-    portfolio_id = Column(ForeignKey('portfolio.id'))
+    portfolio_id = Column(Integer, ForeignKey('portfolio.id'))
     quantity = Column(Integer)
     equity = Column(Numeric(15,2))
     current_return = Column(Numeric(15,2))

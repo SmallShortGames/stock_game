@@ -1,6 +1,6 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Numeric
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
 from sqlalchemy.orm import validates
 
 class Company(Base):
@@ -9,10 +9,21 @@ class Company(Base):
     company_name = Column(String(30), nullable=False)
     website = Column(String(100))
     ticker = Column(String(5), nullable=False)
-    industry = Column(String(100))
-    sector = Column(String(100))
-    ipo_date = Column(DateTime)
+    industry = Column(Enum(50))
+    sector = Column(Enum(50))
+    ipo_date = Column(Date)
     last_price = Column(Numeric(8,2))
-    portfolio_id = Column(ForeignKey('portfolio.id'))
+    volatility = Column(Integer)
+    portfolio_id = Column(Integer, ForeignKey('portfolio.id'))
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+
+    @validates('industry')
+    def validate_industry(self, key, industry):
+        assert company.industry() is industry_list
+
+    @validates('email')
+    def validate_email(self, key, email):
+        assert '@' in email
+
+        return email
