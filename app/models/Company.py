@@ -3,7 +3,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
 from sqlalchemy.orm import validates
 
-sector_list = 'Communication Services', 'Consumer Discretionary', 'Consumer Staples', 'Energy', 'Financials', 'Healthcare', 'Industrials', 'Information Technology', 'Materials', 'Real Estate', 'Utilities'
+sector_list = ['Communication Services', 'Consumer Discretionary', 'Consumer Staples', 'Energy', 'Financials', 'Healthcare', 'Industrials', 'Information Technology', 'Materials', 'Real Estate', 'Utilities']
 
 class Company(Base):
     __tablename__ = 'company'
@@ -11,8 +11,7 @@ class Company(Base):
     company_name = Column(String(30), nullable=False)
     website = Column(String(100))
     ticker = Column(String(5), nullable=False)
-    industry = Column(Enum(industry_list, name="industry"), default="")
-    sector = Column(Enum(sector_list, name="Sector"), default="Communication Services")
+    sector = Column(Enum(sector_list, name="sector"), default="Communication Services")
     ipo_date = Column(Date)
     last_price = Column(Numeric(8,2))
     volatility = Column(Integer)
@@ -20,12 +19,12 @@ class Company(Base):
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
 
-    @validates('industry')
-    def validate_industry(self, key, industry):
-        assert company.industry() is industry_list
+    @validates('sector')
+    def validate_sector(self, key, sector):
+        assert company.sector() is sector_list
+        return sector
 
     @validates('email')
     def validate_email(self, key, email):
         assert '@' in email
-
         return email
