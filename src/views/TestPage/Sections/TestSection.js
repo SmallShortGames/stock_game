@@ -16,6 +16,8 @@ import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
+import TestChart from "components/Graphs/TestChart.js";
+
 const useStyles = makeStyles(styles);
 
 export default function TestSection() {
@@ -34,6 +36,31 @@ export default function TestSection() {
         >
           Materialize Documentation
         </Button>
+        <Card>
+          <CardBody>
+            Let everyone know about canvasJS, a pretty solid graph library for
+            react. decided to use this over chartjs because its a lot easier to implement
+            <Button
+              color="default"
+              href="https://canvasjs.com/react-charts/line-chart/"
+              target="_blank"
+            >
+              canvasJS
+            </Button>
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            Will there need to be Python in the React frontend? because I would
+            be very interested in working with Python more
+          </CardBody>
+        </Card>
+        <Card>
+          <CardBody>
+            Ask how the backend can apply data from backend to the frointend
+            graph in real time, not requiring constant updating
+          </CardBody>
+        </Card>
         <Card style={{ width: "20rem" }}>
           <CardBody>
             <h4 className={classes.cardTitle}>Card Title</h4>
@@ -58,6 +85,7 @@ export default function TestSection() {
             </a>
           </CardBody>
         </Card>
+        <TestChart />
       </div>
     </div>
   );
