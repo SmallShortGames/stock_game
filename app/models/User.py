@@ -11,7 +11,7 @@ This model collates all data pertaining to the user;
 - 'operating_income' will start at $50K per user per simulation
 - all properties with Numeric data types are limited to 15 digits with 2 digits following the decimal point
 - there is a ONE to ONE relationship between User and Portfolio (QUESTION: should this by ONE to MANY?)
-- QUESTION: should I be including assertion statements for each validation (similar to password validation)?
+- QUESTION: should assertion statements be included for each validation (similar to password validation)?
 '''
 class User(Base):
     __tablename__ = 'user'
