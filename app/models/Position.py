@@ -3,6 +3,13 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Numeric
 from sqlalchemy.orm import validates
 
+'''
+This model collates data related to the user's current holdings of a particular stock;
+- each player begins simulation with $50K
+- positions have MANY to ONE relationships with user portfolios
+- all dollar-related values on this model are limited to 15 digits, with two digits following the decimal point
+- QUESTION: do property attributes have to be reasserted on foreign keys (e.g. ticker --> String and length of String?)
+'''
 class Position(Base):
     __tablename__ = 'position'
     id = Column(Integer, primary_key=True)
