@@ -5,6 +5,14 @@ from sqlalchemy.orm import validates
 from werkzeug.security import generate_password_hash
 import re
 
+'''
+This model collates all data pertaining to the user;
+- 'username', 'email', and 'password' are all required properties and limited to between 2 and 30, 6 and 50 and 6 and 255 characters, respectively.
+- 'portfolio_name' is a required, user-provided property and limited to between 2 and 50 characters
+- 'operating_income' will start at $50K per user per simulation
+- all properties with Numeric data types are limited to 15 digits with 2 digits following the decimal point
+- there is a ONE to ONE relationship between User and Portfolio (QUESTION: should this by ONE to MANY?)
+'''
 class User(Base):
     __tablename__ = 'user'
     id = Column(Integer, primary_key=True)
@@ -44,8 +52,6 @@ class User(Base):
             raise AssertionError("Please enter a password.")
         if not re.match('\d.*[A-Z]|[A-Z].*\d', password):
             raise AssertionError('Your password must contain at least one capital letter and one number.')
-        if len(password) < 4 or len(password) > 255:
+        if len(password) < 6 or len(password) > 255: # 4/30/21 - I kept the min password length to 6, happy to discuss - Josh
             raise AssertionError("Your email address must be between 4 and 50 characters long.")
         return generate_password_hash(password)
-
-
