@@ -3,6 +3,11 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Numeric
 from sqlalchemy.orm import validates
 
+'''
+This model collates data related to the user's current holdings of a particular stock;
+- positions have MANY to ONE relationships with user portfolios
+- all dollar-related values on this model are limited to 15 digits, with two digits following the decimal point
+'''
 class Position(Base):
     __tablename__ = 'position'
     id = Column(Integer, primary_key=True)
@@ -14,6 +19,6 @@ class Position(Base):
     current_return = Column(Numeric(15,2))
     total_return = Column(Numeric(15,2))
     portfolio_id = Column(Integer, ForeignKey('portfolio.id'))
-    ticker = Column(String(5), ForeignKey('company.ticker'), nullable=False)
+    company_id = Column(Integer, ForeignKey('company.id'), nullable=False)
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
