@@ -1,6 +1,6 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric, Date
 from sqlalchemy.orm import validates
 
 # List to use with enumeration data type "Enum"
@@ -20,7 +20,7 @@ class Company(Base):
     company_name = Column(String(30), nullable=False)
     website = Column(String(100))
     ticker = Column(String(5), nullable=False)
-    sector = Column(Enum(sector_list, name="sector"), default="Communication Services")
+    sector = Column(Enum('Communication Services', 'Consumer Discretionary', 'Consumer Staples', 'Energy', 'Financials', 'Healthcare', 'Industrials', 'Information Technology', 'Materials', 'Real Estate', 'Utilities', name="sector"), default="Communication Services")
     ipo_date = Column(Date)
     last_price = Column(Numeric(8,2))
     volatility = Column(Integer)

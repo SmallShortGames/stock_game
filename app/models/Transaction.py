@@ -18,9 +18,9 @@ class Transaction(Base):
     __tablename__ = 'transaction'
     id = Column(Integer, primary_key=True)
     buy_side = Column(Boolean)
-    exchange = Column(Enum(exchange_list, name="exchange"), default="American Stock Exchange (AMEX)")
     price = Column(Numeric(8,2), nullable=False)
-    quantity = Column(Integer(20,2))
+    exchange = Column(Enum('American Stock Exchange (AMEX)', 'National Association of Securities Dealers (NASDAQ)', 'New York Stock Exchange (NYSE)', name="exchange"), default="American Stock Exchange (AMEX)")
+    quantity = Column(Integer)
     portfolio_id = Column(Integer, ForeignKey('portfolio.id'))
     created_at = Column(DateTime, default=datetime.now)
     updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)

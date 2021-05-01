@@ -1,6 +1,6 @@
 from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime, ForeignKey, Numeric
+from sqlalchemy import Column, Integer, DateTime, ForeignKey, Numeric, String
 from sqlalchemy.orm import validates
 
 '''
