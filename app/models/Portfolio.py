@@ -7,7 +7,7 @@ from sqlalchemy.orm import validates
 This model collates data pertaining to status of each user's complete portfolio;
 - 'balance' is required and limited to 15 digits, with two digits following the decimal point
 - 'portfolio_name' is a required, user-provided property and limited to between 2 and 50 characters
-- there is a ONE to ONE relationship between portfolio and user (QUESTION: should this by MANY to ONE?)
+- there is a MANY to ONE relationship between portfolio and user
 - 'portfolio' has ONE to MANY relationships with 'company', 'position', and 'transaction'
 '''
 class Portfolio(Base):
