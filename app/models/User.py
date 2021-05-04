@@ -11,7 +11,7 @@ This model collates all data pertaining to the user;
 - 'portfolio_name' is a required, user-provided property and limited to between 2 and 50 characters
 - 'operating_income' will start at $50K per user per simulation
 - all properties with Numeric data types are limited to 15 digits with 2 digits following the decimal point
-- there is a ONE to ONE relationship between User and Portfolio (QUESTION: should this by ONE to MANY?)
+- there is a ONE to MANY relationship between User and Portfolio
 '''
 class User(Base):
     __tablename__ = 'user'
