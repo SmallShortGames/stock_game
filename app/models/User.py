@@ -1,3 +1,4 @@
+import mongoengine
 from app.db import Base
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Numeric
@@ -12,17 +13,17 @@ This model collates all data pertaining to the user;
 - all properties with Numeric data types are limited to 15 digits with 2 digits following the decimal point
 - there is a ONE to MANY relationship between User and Portfolio
 '''
-class User(Base):
-    __tablename__ = 'user'
-    id = Column(Integer, primary_key=True)
-    username = Column(String(30), nullable=False)
-    email = Column(String(50), nullable=False, unique=True)
-    password = Column(String(255), nullable=False)
-    operating_income = Column(Numeric(15,2))
-    gross_profit = Column(Numeric(15,2))
-    total_equity = Column(Numeric(15,2))
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+class User(Document):
+    # __tablename__ = 'user'
+    id = UUIDField(binary=False)
+    username = StringField(max_length=30, required=True)
+    email = StringField(max_length=50, required=True, unique=True)
+    password = StringField(max_length=255, required=True)
+    operating_income = DecimalField(max_length=15, precision=2)
+    gross_profit = DecimalField(max_length=15, precision=2)
+    total_equity = DecimalField(max_length=15, precision=2)
+    created_at = DateTimeField(default=datetime.utcnow)
+    updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @validates('username')
     def validate_username(self, key, username):
