@@ -17,6 +17,8 @@ import Button from "components/CustomButtons/Button.js";
 import styles from "assets/jss/material-kit-react/views/landingPageSections/productStyle.js";
 
 import TestChart from "components/Graphs/TestChart.js";
+import Login from "components/Login/Login.js";
+import Registration from "components/Registration/Registration.js";
 
 const useStyles = makeStyles(styles);
 
@@ -86,6 +88,8 @@ export default function TestSection() {
           </CardBody>
         </Card>
         <TestChart />
+        <Login />
+        <Registration />
       </div>
     </div>
   );
