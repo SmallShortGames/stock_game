@@ -4,6 +4,7 @@ from datetime import datetime
 # from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
 # from sqlalchemy.orm import validates
 
+
 # List to use with enumeration data type "Enum"
 sector_list = ['Communication Services', 'Consumer Discretionary', 'Consumer Staples', 'Energy', 'Financials', 'Healthcare', 'Industrials', 'Information Technology', 'Materials', 'Real Estate', 'Utilities']
 
@@ -12,6 +13,7 @@ This model collates data for each company represented within the game;
 - 'company_name' and 'ticker' are required values
 - validation on 'sector' has been included to help test use of the Enum data type
 '''
+
 class Company(Document):
     # __tablename__ = 'company'
     id = IntField(required=True, null=False, unique=True, primary_key=True)
@@ -23,6 +25,7 @@ class Company(Document):
     portfolio_id = ListField(EmbeddedDocumentField(Portfolio.id))
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
+
 
     @validates('sector')
     def validate_sector(self, key, sector):

@@ -4,6 +4,7 @@ from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Numeric
 from sqlalchemy.orm import validates
 from werkzeug.security import generate_password_hash
+import re
 
 '''
 This model collates all data pertaining to the user;
@@ -52,6 +53,6 @@ class User(Document):
             raise AssertionError("Please enter a password.")
         if not re.match('\d.*[A-Z]|[A-Z].*\d', password):
             raise AssertionError('Your password must contain at least one capital letter and one number.')
-        if len(password) < 6 or len(password) > 255:
+        if len(password) < 6 or len(password) > 255: # 4/30/21 - I kept the min password length to 6, happy to discuss - Josh
             raise AssertionError("Your email address must be between 4 and 50 characters long.")
         return generate_password_hash(password)

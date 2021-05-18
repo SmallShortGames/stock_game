@@ -26,6 +26,7 @@ class Transaction(Base):
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
 
+
     @validates('exchange')
     def validate_industry(self, key, exchange):
         assert company.exchange() is exchange_list

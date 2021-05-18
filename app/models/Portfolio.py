@@ -4,6 +4,7 @@ from datetime import datetime
 # from sqlalchemy import Column, Integer, DateTime, ForeignKey, Numeric
 # from sqlalchemy.orm import validates
 
+
 '''
 This model collates data pertaining to status of each user's complete portfolio;
 - 'balance' is required and limited to 15 digits, with two digits following the decimal point
