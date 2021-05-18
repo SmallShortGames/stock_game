@@ -1,7 +1,9 @@
-from app.db import Base
+import mongoengine
+# from app.db import Base
 from datetime import datetime
-from sqlalchemy import Column, Integer, DateTime, ForeignKey, Numeric, String
-from sqlalchemy.orm import validates
+# from sqlalchemy import Column, Integer, DateTime, ForeignKey, Numeric
+# from sqlalchemy.orm import validates
+
 
 '''
 This model collates data pertaining to status of each user's complete portfolio;
@@ -10,14 +12,14 @@ This model collates data pertaining to status of each user's complete portfolio;
 - there is a MANY to ONE relationship between portfolio and user
 - 'portfolio' has ONE to MANY relationships with 'company', 'position', and 'transaction'
 '''
-class Portfolio(Base):
-    __tablename__ = 'portfolio'
-    id = Column(Integer, primary_key=True)
-    portfolio_name = Column(String(50), nullable=False)
-    balance = Column(Numeric(15,2), nullable=False) 
-    user_id = Column(Integer, ForeignKey('user.id'))
-    created_at = Column(DateTime, default=datetime.now)
-    updated_at = Column(DateTime, default=datetime.now, onupdate=datetime.now)
+class Portfolio(EmbeddedDocument):
+    # __tablename__ = 'portfolio'
+    id = IntField(required=True, unique=True, primary_key=True)
+    portfolio_name = StringField(max_length=50, required=True)
+    balance = DecimalField(max_length=15, precision=2, nullable=False)
+    user_id = ListField(EmbeddedDocumentField(User.id))
+    created_at = DateTimeField(default=datetime.utcnow)
+    updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
 
     @validates('portfolio_name')
     def validate_portfolio_name(self, key, username):
