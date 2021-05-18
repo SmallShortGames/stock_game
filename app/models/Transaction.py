@@ -1,6 +1,7 @@
-import mongoengine
+from mongoengine import *
 # from app.db import Base
 from datetime import datetime
+from app.models import Portfolio
 # from sqlalchemy import Column, Integer, DateTime, ForeignKey, Numeric, Enum, Boolean
 # from sqlalchemy.orm import validates
 
@@ -15,19 +16,19 @@ This model collates data related to making a purchase or selling a stock;
 - stock quantities (keeping in mind penny stocks are allowed) are limited to 20 digits per transaction
 - validation on 'exchange' has been included to help test use of Enum data-type
 '''
-class Transaction(Base):
+class Transaction(Document):
     # __tablename__ = 'transaction'
     id = IntField(required=True, unique=True, primary_key=True)
     buy_side = BooleanField(default=True)
     exchange = ListField(StringField(required=True, choices=exchange_list, null=False, default="American Stock Exchange (AMEX)"))
     price = DecimalField(max_length=8, precision=2, required=True, null=False)
     quantity = DecimalField(max_length=20, precision=2, required=True, null=False)
-    portfolio_id = ListField(EmbeddedDocumentField(Portfolio.id))
+    portfolio_id = ReferenceField(Portfolio)
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    @validates('exchange')
+    # @validates('exchange')
     def validate_industry(self, key, exchange):
         assert company.exchange() is exchange_list
         return exchange

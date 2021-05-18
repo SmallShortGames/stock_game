@@ -1,6 +1,7 @@
 from mongoengine import *
 # from app.db import Base
 from datetime import datetime
+from app.models import Portfolio
 # from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
 # from sqlalchemy.orm import validates
 
@@ -22,12 +23,12 @@ class Company(Document):
     sector = ListField(StringField(required=True, choices=sector_list, null=False, default="Communication Services"))
     ipo_date = DateTimeField(default=datetime.date)
     volatility = IntField(min_value=1, max_value=5)
-    portfolio_id = ListField(EmbeddedDocumentField(Portfolio.id))
+    portfolio_id = ReferenceField(Portfolio)
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
 
 
-    @validates('sector')
+    # @validates('sector')
     def validate_sector(self, key, sector):
         assert company.sector() is sector_list
         return sector

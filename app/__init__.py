@@ -7,6 +7,7 @@ from werkzeug.security import check_password_hash
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
+import os
 
 app = Flask(__name__)
 CORS(app)
