@@ -53,13 +53,12 @@ export default function TestSection() {
         </Card>
         <Card>
           <CardBody>
-            Will there need to be Python in the React frontend? because I would
-            be very interested in working with Python more
+            Put Login and Registration cardsin modals, create buttons for each
           </CardBody>
         </Card>
         <Card>
           <CardBody>
-            Ask how the backend can apply data from backend to the frointend
+            Ask how the backend can apply data from backend to the frontend
             graph in real time, not requiring constant updating
           </CardBody>
         </Card>

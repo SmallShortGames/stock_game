@@ -26,7 +26,7 @@ export default function Login() {
     <div>
       <div className={classes.container}>
         <GridContainer>
-          <GridItem xs={12} sm={12} md={4}>
+          <GridItem xs={12} sm={12} md={6}>
             <Card>
               <form className={classes.form}>
                 <CardHeader color="primary" className={classes.cardHeader}>
@@ -65,10 +65,12 @@ export default function Login() {
                     </Button>
                   </div>
                 </CardHeader>
-                <p className={classes.divider}>src\components\Login\Login.jsgit </p>
+                <p className={classes.divider}>
+                  src\components\Login\Login.jsgit{" "}
+                </p>
                 <CardBody>
                   <CustomInput
-                    labelText="Userame..."
+                    labelText="Username..."
                     id="username"
                     formControlProps={{
                       fullWidth: true,
@@ -78,21 +80,6 @@ export default function Login() {
                       endAdornment: (
                         <InputAdornment position="end">
                           <People className={classes.inputIconsColor} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <CustomInput
-                    labelText="Email..."
-                    id="email"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: "email",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <Email className={classes.inputIconsColor} />
                         </InputAdornment>
                       ),
                     }}
@@ -118,7 +105,10 @@ export default function Login() {
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
                   <Button simple color="primary" size="lg">
-                    Get started
+                    Forgot Username
+                  </Button>
+                  <Button simple color="primary" size="lg">
+                    Forgot Password
                   </Button>
                 </CardFooter>
               </form>

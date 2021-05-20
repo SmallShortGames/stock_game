@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -15,13 +16,33 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
+import Checkbox from "@material-ui/core/Checkbox";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
+// @material-ui/icons
+import Check from "@material-ui/icons/Check";
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Registration() {
+  const [checked, setChecked] = React.useState([24, 22]);
   const classes = useStyles();
+  const wrapperDiv = classNames(
+    classes.checkboxAndRadio,
+    classes.checkboxAndRadioHorizontal
+  );
+  const handleToggle = (value) => {
+    const currentIndex = checked.indexOf(value);
+    const newChecked = [...checked];
+
+    if (currentIndex === -1) {
+      newChecked.push(value);
+    } else {
+      newChecked.splice(currentIndex, 1);
+    }
+    setChecked(newChecked);
+  };
   return (
     <div>
       <div className={classes.container}>
@@ -65,41 +86,13 @@ export default function Registration() {
                     </Button>
                   </div>
                 </CardHeader>
-                <p className={classes.divider}>src\components\Registration\Registration.js</p>
+                <p className={classes.divider}>
+                  src\components\Registration\Registration.js
+                </p>
                 <CardBody>
                   <CustomInput
                     labelText="Username..."
                     id="username"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: "text",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <People className={classes.inputIconsColor} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <CustomInput
-                    labelText="First Name..."
-                    id="first"
-                    formControlProps={{
-                      fullWidth: true,
-                    }}
-                    inputProps={{
-                      type: "text",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <People className={classes.inputIconsColor} />
-                        </InputAdornment>
-                      ),
-                    }}
-                  />
-                  <CustomInput
-                    labelText="Last Name..."
-                    id="last"
                     formControlProps={{
                       fullWidth: true,
                     }}
@@ -163,10 +156,28 @@ export default function Registration() {
                       autoComplete: "off",
                     }}
                   />
+                  <div className={wrapperDiv}>
+                    <FormControlLabel
+                      control={
+                        <Checkbox
+                          tabIndex={-1}
+                          onClick={() => handleToggle(22)}
+                          checked={checked.indexOf(22) !== -1 ? true : false}
+                          checkedIcon={
+                            <Check className={classes.checkedIcon} />
+                          }
+                          icon={<Check className={classes.uncheckedIcon} />}
+                          classes={{ checked: classes.checked }}
+                        />
+                      }
+                      classes={{ label: classes.label }}
+                      label="I am 18 or older"
+                    />
+                  </div>
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
                   <Button simple color="primary" size="lg">
-                    Get started
+                    Submit
                   </Button>
                 </CardFooter>
               </form>
