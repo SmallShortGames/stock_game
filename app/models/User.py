@@ -1,9 +1,10 @@
-import mongoengine
+from mongoengine import *
 from app.db import Base
 from datetime import datetime
 from sqlalchemy import Column, Integer, String, DateTime, Numeric
 from sqlalchemy.orm import validates
 from werkzeug.security import generate_password_hash
+import re
 
 '''
 This model collates all data pertaining to the user;
@@ -25,7 +26,7 @@ class User(Document):
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    @validates('username')
+    # @validates('username')
     def validate_username(self, key, username):
         if not username:
             raise AssertionError("Please enter your username.")
@@ -33,7 +34,7 @@ class User(Document):
             raise AssertionError("Your username must be between 2 and 30 characters long.")
         return username
 
-    @validates('email')
+    # @validates('email')
     def validate_email(self, key, email):
         if not email:
             raise AssertionError("You must provide an email address.")
@@ -45,13 +46,13 @@ class User(Document):
             raise AssertionError("Your email address must be between 6 and 50 characters long.")
         return email
 
-    @validates('password')
+    # @validates('password')
     def validate_password(self, key, password):
         assert len(password) > 6
         if not password:
             raise AssertionError("Please enter a password.")
         if not re.match('\d.*[A-Z]|[A-Z].*\d', password):
             raise AssertionError('Your password must contain at least one capital letter and one number.')
-        if len(password) < 6 or len(password) > 255:
+        if len(password) < 6 or len(password) > 255: # 4/30/21 - I kept the min password length to 6, happy to discuss - Josh
             raise AssertionError("Your email address must be between 4 and 50 characters long.")
         return generate_password_hash(password)
