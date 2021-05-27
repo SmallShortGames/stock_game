@@ -17,9 +17,9 @@ This model collates all data pertaining to the user;
 class User(Document):
     # __tablename__ = 'user'
     id = UUIDField(binary=False)
-    username = StringField(max_length=30, required=True)
-    email = StringField(max_length=50, required=True, unique=True)
-    password = StringField(max_length=255, required=True)
+    username = StringField(max_length=30, required=True, null=False)
+    email = StringField(max_length=50, required=True, unique=True, null=False)
+    password = StringField(max_length=255, required=True, null=False)
     operating_income = DecimalField(max_length=15, precision=2)
     gross_profit = DecimalField(max_length=15, precision=2)
     total_equity = DecimalField(max_length=15, precision=2)
