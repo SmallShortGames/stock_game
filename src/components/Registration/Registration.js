@@ -52,39 +52,6 @@ export default function Registration() {
               <form className={classes.form}>
                 <CardHeader color="primary" className={classes.cardHeader}>
                   <h4>Register</h4>
-                  <div className={classes.socialLine}>
-                    <Button
-                      justIcon
-                      href="#pablo"
-                      target="_blank"
-                      color="transparent"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className={classes.socialIcons + " fab fa-twitter"} />
-                    </Button>
-                    <Button
-                      justIcon
-                      href="#pablo"
-                      target="_blank"
-                      color="transparent"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i className={classes.socialIcons + " fab fa-facebook"} />
-                    </Button>
-                    <Button
-                      justIcon
-                      href="#pablo"
-                      target="_blank"
-                      color="transparent"
-                      onClick={(e) => e.preventDefault()}
-                    >
-                      <i
-                        className={
-                          classes.socialIcons + " fab fa-google-plus-g"
-                        }
-                      />
-                    </Button>
-                  </div>
                 </CardHeader>
                 <p className={classes.divider}>
                   src\components\Registration\Registration.js
@@ -162,7 +129,7 @@ export default function Registration() {
                         <Checkbox
                           tabIndex={-1}
                           onClick={() => handleToggle(22)}
-                          checked={checked.indexOf(22) !== -1 ? true : false}
+                          checked={checked.indexOf(22) !== -1 ? false : true}
                           checkedIcon={
                             <Check className={classes.checkedIcon} />
                           }

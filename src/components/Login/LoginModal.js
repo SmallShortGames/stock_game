@@ -40,7 +40,7 @@ export default function LoginModal() {
     <div>
       <div>
         <Button color="rose" round onClick={() => setModal(true)}>
-          Modal
+          Login
         </Button>
       </div>
       <React.Fragment>
@@ -54,50 +54,13 @@ export default function LoginModal() {
           keepMounted
           onClose={() => setModal(false)}
         >
-          <Card>
+          <Card style={{ margin: "0" }}>
             <form className={loginClasses.form}>
-              <CardHeader color="primary" className={loginClasses.cardHeader}>
-                <h4>Login</h4>
-                <div className={loginClasses.socialLine}>
-                  <Button
-                    justIcon
-                    href="#pablo"
-                    target="_blank"
-                    color="transparent"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <i
-                      className={loginClasses.socialIcons + " fab fa-twitter"}
-                    />
-                  </Button>
-                  <Button
-                    justIcon
-                    href="#pablo"
-                    target="_blank"
-                    color="transparent"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <i
-                      className={loginClasses.socialIcons + " fab fa-facebook"}
-                    />
-                  </Button>
-                  <Button
-                    justIcon
-                    href="#pablo"
-                    target="_blank"
-                    color="transparent"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <i
-                      className={
-                        loginClasses.socialIcons + " fab fa-google-plus-g"
-                      }
-                    />
-                  </Button>
-                </div>
-              </CardHeader>
+              <div className={loginClasses.cardHeader}>
+                <h4 style={{ padding: "50px 0px 0px 0px" }}>Login</h4>
+              </div>
               <p className={loginClasses.divider}>
-                src\components\Login\Login.jsgit{" "}
+                src\components\Login\LoginModal.js
               </p>
               <CardBody>
                 <CustomInput

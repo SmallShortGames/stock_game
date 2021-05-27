@@ -85,7 +85,7 @@ export default function TestSection() {
         <Login />
         <Registration />
         <LoginModal />
-        {/* <RegistrationModal /> */}
+        <RegistrationModal />
       </div>
     </div>
   );
