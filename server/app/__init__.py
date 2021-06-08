@@ -25,6 +25,23 @@ def hello():
 # returns user profile
 @app.route('/user/<username>')
 def user_profile(username):
+    email = request.json['email']
+
+    try:
+        user = database.query(User).filter_by(email=email).first()
+    except AttributeError:
+        print("error")
+    else:
+        return {
+            "data": {
+                "id": user.id,
+                "username": user.username,
+                "gross_profit": user.gross_profit,
+                "total_equity": user.total_equity
+            },
+            "message": "success"
+        }, 200
+
     return 'Welcome, %!' % escape(username)
 
 @app.route('/buy')
@@ -51,14 +68,17 @@ def login():
         print("error")
     else:
         if exist_user is None:
-            return {"message": "User not found"}, 401
+            return {"data": None ,"message": "User not found"}, 401
         elif not check_password_hash(exist_user.password, password):
-            return {"message": "Unauthorized"}, 401
+            return {"data": None, "message": "Unauthorized"}, 401
         else:
             return {
-                "id": exist_user.id,
-                "username": exist_user.username,
-                "email": exist_user.email
+                "data": {
+                    "id": exist_user.id,
+                    "username": exist_user.username,
+                    "email": exist_user.email
+                },
+                "message": "success!"
             }, 200
 
 @app.route('/register', methods=['POST'])
@@ -79,7 +99,13 @@ def register():
         database.add(new_user)
         database.commit()
     except IntegrityError:
-        return {"message": "Email already exists"}, 401
+        return {"data": None,"message": "Email already exists"}, 401
     else:
-        return {'username': username, 'email': email}, 201
+        return {
+            "data": {
+                'username': username, 
+                'email': email
+                },
+            "message": "success!"
+        }, 201
 
