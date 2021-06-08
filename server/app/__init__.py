@@ -72,6 +72,9 @@ def register():
     new_user.username = username
     new_user.email = email
     new_user.password = password
+    new_user.operating_income = 50000.00
+    new_user.gross_profit = 0.00
+    new_user.total_equity = 50000.00
     try:
         database.add(new_user)
         database.commit()
