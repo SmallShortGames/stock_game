@@ -1,0 +1,27 @@
+// Override default variables before the import
+$body-bg: rgb(208, 208, 255);
+
+.col {
+  // padding: 0px 5px 0px 5px;
+  // height: 75%;
+}
+
+.card {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 100%;
+}
+.navbar {
+  margin-bottom: 5px;
+}
+
+.center {
+  margin: 0 auto;
+}
+
+.card-header-tabs {
+  margin-bottom: 20px!important;
+}
+
+// Import Bootstrap and its default variables
+@import "~bootstrap/scss/bootstrap.scss";
