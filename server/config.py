@@ -1,7 +1,6 @@
 from os import environ, path
 from dotenv import load_dotenv, find_dotenv
 
-
 load_dotenv(find_dotenv())
 
 class Config(object):
@@ -14,7 +13,6 @@ class Production(Config):
     DEBUG = False
     # DATABASE_URI = environ.get('PROD_DB_URI')
 
-    
 class Development(Config):
     FLASK_ENV = 'development'
     DEVELOPMENT = True
