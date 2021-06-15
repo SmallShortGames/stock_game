@@ -131,6 +131,7 @@ yarn-error.log*
 # compiled css
 *.css
 venv/
+reactFlask/
 .env
 
 *.pyc
