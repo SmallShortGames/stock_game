@@ -3,12 +3,13 @@ from flask_cors import CORS
 from markupsafe import escape
 # from app.db import db, Session, Base
 from app.models import User, Portfolio, Position, Company
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 # from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
 from dotenv import load_dotenv, find_dotenv
 import os
+
 
 load_dotenv(find_dotenv())
 
@@ -26,24 +27,23 @@ connect(host=db_url)
 def hello():
     return {"key": "value"}
 
+
 # returns user profile
-
-
-@app.route('/user/<username>')
-def user_profile(username):
-    email = request.json['email']
+@app.route('/user/<user_id>')
+def user_profile(user_id):
+    """User profile route for a central location for user stats and position data"""
 
     try:
-        user = database.query(User).filter_by(email=email).first()
+        user = User.objects(id=user_id).first()
     except AttributeError:
         print("error")
     else:
         return {
             "data": {
-                "id": user.id,
+                "id": str(user.id),
                 "username": user.username,
-                "gross_profit": user.gross_profit,
-                "total_equity": user.total_equity
+                "gross_profit": float(user.gross_profit),
+                "total_equity": float(user.total_equity)
             },
             "message": "success"
         }, 200
@@ -51,13 +51,23 @@ def user_profile(username):
     return 'Welcome, %!' % escape(username)
 
 
-@app.route('/buy')
+@app.route('/buy', methods=['POST'])
 def buy():
+    """Route will look like http://game.com/buy?id=xyz123&company=ticker&quantity=100"""
+    user_id = request.args.get('id')
+    company = request.args.get('company')
+    quantity = request.args.get('quantity')
     return
 
 
-@app.route('/viewstock')
-def viewstock():
+@app.route('/sell', methods=['PUT'])
+def sell():
+    return
+
+
+@app.route('/viewstock/<company>')
+def viewstock(company):
+    """Return company data with historical stock data"""
     return
 
 
@@ -73,20 +83,20 @@ def login():
     password = request.json['password']
 
     try:
-        exist_user = User.objects(email=email)
+        exist_user = User.objects.filter(email=email)
     except AttributeError:
         print("error")
     else:
         if exist_user is None:
             return {"data": None, "message": "User not found"}, 401
-        elif not check_password_hash(exist_user.password, password):
+        elif not check_password_hash(exist_user[0].password, password):
             return {"data": None, "message": "Unauthorized"}, 401
         else:
             return {
                 "data": {
-                    "id": exist_user.id,
-                    "username": exist_user.username,
-                    "email": exist_user.email
+                    "id": str(exist_user[0].id),
+                    "username": exist_user[0].username,
+                    "email": exist_user[0].email
                 },
                 "message": "success!"
             }, 200
@@ -102,7 +112,7 @@ def register():
     new_user = User()
     new_user.username = username
     new_user.email = email
-    new_user.password = password
+    new_user.password = generate_password_hash(password)
     new_user.operating_income = 50000.00
     new_user.gross_profit = 0.00
     new_user.total_equity = 50000.00

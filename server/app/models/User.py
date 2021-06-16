@@ -18,7 +18,7 @@ This model collates all data pertaining to the user;
 
 class User(Document):
     # __tablename__ = 'user'
-    id = UUIDField(binary=False)
+    # id = UUIDField(binary=False)
     username = StringField(max_length=30, required=True, null=False)
     email = StringField(max_length=50, required=True, unique=True, null=False)
     password = StringField(max_length=255, required=True, null=False)
