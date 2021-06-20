@@ -62,5 +62,5 @@ class User(Document):
         # 4/30/21 - I kept the min password length to 6, happy to discuss - Josh
         if len(password) < 6 or len(password) > 255:
             raise AssertionError(
-                "Your password address must be between 6 and 50 characters long.")
+                "Your password must be between 6 and 50 characters long.")
         return generate_password_hash(password)
