@@ -83,20 +83,20 @@ def login():
     password = request.json['password']
 
     try:
-        exist_user = User.objects.filter(email=email)
+        exist_user = User.objects.filter(email=email).first()
     except AttributeError:
         print("error")
     else:
         if exist_user is None:
             return {"data": None, "message": "User not found"}, 401
-        elif not check_password_hash(exist_user[0].password, password):
+        elif not check_password_hash(exist_user.password, password):
             return {"data": None, "message": "Unauthorized"}, 401
         else:
             return {
                 "data": {
-                    "id": str(exist_user[0].id),
-                    "username": exist_user[0].username,
-                    "email": exist_user[0].email
+                    "id": str(exist_user.id),
+                    "username": exist_user.username,
+                    "email": exist_user.email
                 },
                 "message": "success!"
             }, 200
@@ -118,13 +118,16 @@ def register():
     new_user.total_equity = 50000.00
     try:
         new_user.save()
+        user = User.objects.filter(email=email).first()
+        Portfolio(balance=0.00, user_id=user).save()
     except IntegrityError:
         return {"data": None, "message": "Email already exists"}, 401
     else:
         return {
             "data": {
-                'username': username,
-                'email': email
+                'id': str(user.id)
+                'username': user.username,
+                'email': user.email
             },
             "message": "success!"
         }, 201
