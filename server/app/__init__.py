@@ -125,7 +125,7 @@ def register():
     else:
         return {
             "data": {
-                'id': str(user.id)
+                'id': str(user.id),
                 'username': user.username,
                 'email': user.email
             },
