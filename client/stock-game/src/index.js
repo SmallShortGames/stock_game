@@ -9,6 +9,9 @@ import '../src/assets/css/custom.scss';
 // import App from './App';
 // import TestPage from "views/TestPage/TestPage.js";
 import MainPage from "./views/MainPage/MainPage.js";
+import TestPage from "./views/TestPage/TestPage.js";
+import LoginPage from "./views/LoginPage/LoginPage.js";
+import RegistrationPage from './views/RegistrationPage/RegistrationPage.js';
 
 
 var hist = createBrowserHistory();
@@ -16,7 +19,9 @@ var hist = createBrowserHistory();
 ReactDOM.render(
   <Router history={hist}>
     <Switch>
-      {/* <Route path="/test-page" component={TestPage} /> */}
+      <Route path="/test-page" component={TestPage} />
+      <Route path="/login-page" component={LoginPage} />
+      <Route path="/registration-page" component={RegistrationPage} />
       <Route path="/" component={MainPage} />
       {/* <Route path="/" component={App} /> */}
     </Switch>
