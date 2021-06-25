@@ -1,6 +1,19 @@
 // Override default variables before the import
 $body-bg: rgb(208, 208, 255);
 
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none!important;
+  color: rgba(0, 0, 0, 0.7);
+//   color: inherit;
+}
+
+.nav-link.disabled {
+  pointer-events: none;
+}
+
 .col {
   // padding: 0px 5px 0px 5px;
   // height: 75%;
@@ -20,7 +33,7 @@ $body-bg: rgb(208, 208, 255);
 }
 
 .card-header-tabs {
-  margin-bottom: 20px!important;
+  margin-bottom: 20px !important;
 }
 
 // Import Bootstrap and its default variables
