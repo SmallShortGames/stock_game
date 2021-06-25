@@ -36,7 +36,7 @@ class Company_Data(Base):
     low = Column(Numeric(8, 5))
     daily_close = Column(Numeric(8, 5))
     vol = Column(Integer)
-    volatility = Column(Numeric(8, 9))
+    volatility = Column(Numeric(20, 20))
 
 
 company_dict = {}
@@ -84,4 +84,4 @@ with Session() as session:
                                      daily_close=data_dict[ticker][dt]['daily_close'],
                                      vol=data_dict[ticker][dt]['vol'],
                                      volatility=data_dict[ticker][dt]['volatility']))
-            session.commit()
+    session.commit()
