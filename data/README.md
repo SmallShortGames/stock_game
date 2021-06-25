@@ -8,4 +8,4 @@ MYSQL_DB=mysql+pymysql://`path to database`
 2. Have mysql installed
 3. install SQLAlchemy and pymysql
 4. run bash `python3 comp_api.py` - or windows `python comp_api`
-   - be prepared to wait for about 20 minutes for dataset to run
+   - be prepared to wait for about 5 minutes for dataset to run
