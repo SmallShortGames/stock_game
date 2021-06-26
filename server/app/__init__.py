@@ -1,10 +1,10 @@
 from flask import Flask, request, Response, jsonify
 from flask_cors import CORS
 from markupsafe import escape
-# from app.db import db, Session, Base
+from app.db import Session
 from app.models import User, Portfolio, Position, Company
 from werkzeug.security import check_password_hash, generate_password_hash
-# from sqlalchemy import select
+from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
 from dotenv import load_dotenv, find_dotenv
@@ -18,9 +18,7 @@ CORS(app)
 app.config.from_object('config.Development')
 db_url = os.environ.get("MONGODB_URI")
 connect(host=db_url)
-# database = Session()
-
-# Base.metadata.create_all(bind=db)
+database = Session()
 
 
 @app.route('/hello')
