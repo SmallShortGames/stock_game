@@ -48,8 +48,6 @@ def user_profile(user_id):
             "message": "success"
         }, 200
 
-    return 'Welcome, %!' % escape(username)
-
 
 @app.route('/buy', methods=['POST'])
 def buy():
