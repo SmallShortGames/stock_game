@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const API = {
     userLogin: function(user) {
-        return axios.post("/api/auth/login", user)
+        return axios.post("/login", user)
     }
 }
 
