@@ -5,7 +5,12 @@ from sqlalchemy import Column, Integer, String, Date, ForeignKey, Numeric
 from sqlalchemy.orm import validates
 
 
-class Company(Base):
+class Serializer():
+    def as_dict(self):
+        return {col.name: getattr(self, col.name) for col in self.__table__.columns}
+
+
+class Company(Base, Serializer):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True)
     co_name = Column(String(50), nullable=False, unique=True)
@@ -15,7 +20,7 @@ class Company(Base):
     ipo_date = Column(Date)
 
 
-class Company_Data(Base):
+class Company_Data(Base, Serializer):
     __tablename__ = 'company_data'
     id = Column(Integer, primary_key=True)
     company_id = Column(Integer, ForeignKey('company.id'))
