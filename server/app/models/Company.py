@@ -1,34 +1,34 @@
-from mongoengine import *
-# from app.db import Base
+from app.db import Base
 from datetime import datetime
 from app.models import Portfolio
-# from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Enum, Numeric
-# from sqlalchemy.orm import validates
+from sqlalchemy import Column, Integer, String, Date, ForeignKey, Numeric
+from sqlalchemy.orm import validates
 
 
-# List to use with enumeration data type "Enum"
-sector_list = ['Communication Services', 'Consumer Discretionary', 'Consumer Staples', 'Energy', 'Financials', 'Healthcare', 'Industrials', 'Information Technology', 'Materials', 'Real Estate', 'Utilities']
-
-'''
-This model collates data for each company represented within the game;
-- 'company_name' and 'ticker' are required values
-- validation on 'sector' has been included to help test use of the Enum data type
-'''
-
-class Company(Document):
-    # __tablename__ = 'company'
-    id = IntField(required=True, null=False, unique=True, primary_key=True)
-    company_name = StringField(max_length=30, null=False, required=True)
-    ticker = StringField(max_length=5, required=True, null=False)
-    sector = ListField(StringField(required=True, choices=sector_list, null=False, default="Communication Services"))
-    ipo_date = DateTimeField(default=datetime.date)
-    volatility = IntField(min_value=1, max_value=5)
-    portfolio_id = ReferenceField(Portfolio)
-    created_at = DateTimeField(default=datetime.utcnow)
-    updated_at = DateTimeField(default=datetime.utcnow, onupdate=datetime.utcnow)
+class Serializer():
+    def as_dict(self):
+        return {col.name: getattr(self, col.name) for col in self.__table__.columns}
 
 
-    # @validates('sector')
-    def validate_sector(self, key, sector):
-        assert company.sector() is sector_list
-        return sector
+class Company(Base, Serializer):
+    __tablename__ = 'company'
+    id = Column(Integer, primary_key=True)
+    co_name = Column(String(50), nullable=False, unique=True)
+    ticker = Column(String(5))
+    sector = Column(String(50))
+    per = Column(String(5))
+    ipo_date = Column(Date)
+
+
+class Company_Data(Base, Serializer):
+    __tablename__ = 'company_data'
+    id = Column(Integer, primary_key=True)
+    company_id = Column(Integer, ForeignKey('company.id'))
+    date_ = Column(Date)
+    time_ = Column(Integer)
+    daily_open = Column(Numeric(8, 5))
+    high = Column(Numeric(8, 5))
+    low = Column(Numeric(8, 5))
+    daily_close = Column(Numeric(8, 5))
+    vol = Column(Integer)
+    volatility = Column(Numeric(20, 20))
