@@ -35,7 +35,7 @@ export default function LoginPage() {
     event.preventDefault();
     API.userLogin(loginState).then((res) => {
       console.log(res)
-    }).catch((err) => {console.log(err)})
+    }).catch((err) => {console.error(err)})
   }
   return (
     <>
