@@ -2,13 +2,14 @@ from flask import Flask, request, Response, jsonify
 from flask_cors import CORS
 from markupsafe import escape
 from app.db import Session
-from app.models import User, Portfolio, Position, Company
+from app.models import User, Portfolio, Position, Company, Company_Data
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
 from dotenv import load_dotenv, find_dotenv
 import os
+import json
 
 
 load_dotenv(find_dotenv())
@@ -18,7 +19,7 @@ CORS(app)
 app.config.from_object('config.Development')
 db_url = os.environ.get("MONGODB_URI")
 connect(host=db_url)
-database = Session()
+db = Session()
 
 
 @app.route('/hello')
@@ -58,13 +59,31 @@ def buy():
 
 @app.route('/sell', methods=['PUT'])
 def sell():
+    user_id = request.args.get('id')
+    company = request.args.get('company')
+    quantity = request.args.get('quantity')
     return
 
 
-@app.route('/viewstock/<company>')
-def viewstock(company):
+@app.route('/viewstock/<ticker>', methods=['GET'])
+def viewstock(ticker):
     """Return company data with historical stock data"""
-    return
+
+    company = db.execute("""SELECT * FROM company 
+    JOIN company_data ON company_data.company_id = company.id 
+    WHERE company.ticker = (ticker)""", {'ticker': ticker}
+                         )
+
+    return {"data": [dict(row) for row in company], "message": "success"}, 200
+
+
+@app.route('/stocks', methods=['GET'])
+def get_all_companies():
+    """Returns a json list of all available companies with their ticker and industry"""
+    s = select([Company.id, Company.co_name, Company.sector, Company.ticker])
+    companies = db.execute(s).fetchall()
+    print(companies)
+    return {"data": [dict(row) for row in companies], "message": "Success"}, 200
 
 
 @app.route('/viewdefinition')
