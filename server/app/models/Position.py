@@ -18,7 +18,7 @@ class Position(Document):
     current_return = DecimalField(max_length=15, precision=2)
     total_return = DecimalField(max_length=15, precision=2)
     portfolio_id = ReferenceField(Portfolio)
-    company_id = ReferenceField(Company)
+    # company_id = ReferenceField(Company)
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(
         default=datetime.utcnow, onupdate=datetime.utcnow)
