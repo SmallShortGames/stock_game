@@ -11,7 +11,8 @@ export default function ProtectedRoute({ component: Component, ...rest }) {
             <Route
               {...rest}
               render={(props) => {
-                return authTokens.data ? (
+                  // when I have the back end up and running 
+                return true ? (
                   <Component {...props} />
                 ) : (
                   <Redirect to="/registration-page" />

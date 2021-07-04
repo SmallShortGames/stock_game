@@ -1,24 +1,29 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import React, {useState} from "react";
+import { Router, Route, Switch } from "react-router-dom";
+import { createBrowserHistory } from "history";
+
+import MainPage from "./views/MainPage/MainPage.js";
+import TestPage from "./views/TestPage/TestPage.js";
+import LoginPage from "./views/LoginPage/LoginPage.js";
+import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
+
+import ProtectedRoute from "./components/ProtectedRoute/index.jsx";
+import userContext from "./services/userContext.js";
 
 export default function App() {
+  var hist = createBrowserHistory();
+  const [authTokens, setAuthTokens] = useState({});
+
   return (
-    <Container>
-      <Row>
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      </Row>
-    </Container>
+    <Router history={hist}>
+      <userContext.Provider value={[authTokens, setAuthTokens]}>
+    <Switch>
+      <ProtectedRoute path="/test-page" component={TestPage} />
+      <Route path="/login-page" component={LoginPage} />
+      <Route path="/registration-page" component={RegistrationPage} />
+      <ProtectedRoute path="/" component={MainPage} />
+    </Switch>
+    </userContext.Provider>
+  </Router>
   );
 }
