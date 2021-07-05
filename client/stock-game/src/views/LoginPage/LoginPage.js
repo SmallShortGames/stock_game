@@ -1,6 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import API from "../../utils/API"
+import API from "../../utils/API";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
+import { AuthContext } from "../../App";
 
 import Navbar from "../../components/Navbar.js";
 import LoginModal from "../../components/LoginModal.js";
@@ -18,24 +19,44 @@ import RegistrationModal from "../../components/RegistrationModal.js";
 import "./LoginPage.scss";
 
 export default function LoginPage() {
-  const [loginState, setLoginState] = useState({
+  const { dispatch } = React.useContext(AuthContext);
+  const initialState = {
     email: "",
-    password: ""
-  })
+    password: "",
+    isSubmitting: false,
+    errorMessage: null,
+  };
+  const [loginState, setLoginState] = useState(initialState);
 
   function handleChange(event) {
     const { name, value } = event.target;
     setLoginState({
       ...loginState,
       [name]: value,
-    })
+    });
   }
 
   function handleSubmit(event) {
     event.preventDefault();
-    API.userLogin(loginState).then((res) => {
-      console.log(res)
-    }).catch((err) => {console.error(err)})
+    setLoginState({
+      ...loginState,
+      isSubmitting: true,
+      errorMessage: null,
+    });
+    API.userLogin(loginState)
+      .then((res) => {
+        if (res.statusText === "OK") {
+          dispatch({ type: "LOGIN", payload: res.data });
+        }
+        throw res;
+      })
+      .catch((err) => {
+        setLoginState({
+          ...loginState,
+          isSubmitting: false,
+          errorMessage: err.message || err.statusText,
+        });
+      });
   }
   return (
     <>
@@ -49,20 +70,32 @@ export default function LoginPage() {
                 <Form>
                   <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control onChange={handleChange} name="email" type="email" placeholder="Enter email" />
+                    <Form.Control
+                      onChange={handleChange}
+                      name="email"
+                      type="email"
+                      placeholder="Enter email"
+                    />
                     <Form.Text className="text-muted">
                       We'll never share your email with anyone else.
                     </Form.Text>
                   </Form.Group>
 
                   <Form.Group controlId="formBasicPassword">
-                    <Form.Label >Password</Form.Label>
-                    <Form.Control onChange={handleChange} name="password" type="password" placeholder="Password" />
+                    <Form.Label>Password</Form.Label>
+                    <Form.Control
+                      onChange={handleChange}
+                      name="password"
+                      type="password"
+                      placeholder="Password"
+                    />
                   </Form.Group>
                   <Form.Group controlId="formBasicCheckbox">
                     <Form.Check type="checkbox" label="I'm older than 18" />
                   </Form.Group>
-                  <Button onClick={handleSubmit} variant="primary">Login</Button>
+                  <Button onClick={handleSubmit} variant="primary">
+                    Login
+                  </Button>
                 </Form>
                 <br />
                 <br />

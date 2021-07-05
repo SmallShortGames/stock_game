@@ -21,7 +21,7 @@
   "proxy": "http://localhost:5000",
   "scripts": {
     "start-project": "npm run start && npm run start-server",
-    "start-server": "cd ../../server && venv/bin/flask run --no-debugger",
+    "start-server": "cd ../../server && export MYSQL_DB='mysql+pymysql://root:password@localhost:3306/stockgame'ep && export FLASK_APP=app && export FLASK_ENV=development && venv/bin/flask run --no-debugger",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

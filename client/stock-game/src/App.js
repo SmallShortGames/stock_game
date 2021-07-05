@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 import { Router, Route, Switch } from "react-router-dom";
 import { createBrowserHistory } from "history";
 
@@ -7,23 +7,57 @@ import TestPage from "./views/TestPage/TestPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
 
-import ProtectedRoute from "./components/ProtectedRoute/index.jsx";
-import userContext from "./services/userContext.js";
+export const AuthContext = React.createContext();
 
+const initialState = {
+  isAuthenticated: false,
+  id: null,
+  email: null,
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "LOGIN":
+      localStorage.setItem("id", JSON.stringify(action.payload.id));
+      localStorage.setItem("email", JSON.stringify(action.payload.email));
+      return {
+        ...state,
+        isAuthenticated: true,
+        id: action.payload.id,
+        email: action.payload.email,
+      };
+    case "LOGOUT":
+      localStorage.clear();
+      return {
+        ...state,
+        isAuthenticated: false,
+        id: null,
+        email: null,
+      };
+    default:
+      return state;
+  }
+}
 export default function App() {
   var hist = createBrowserHistory();
-  const [authTokens, setAuthTokens] = useState({});
+
+  const [state, dispatch] = React.useReducer(reducer, initialState);
 
   return (
-    <Router history={hist}>
-      <userContext.Provider value={[authTokens, setAuthTokens]}>
-    <Switch>
-      <ProtectedRoute path="/test-page" component={TestPage} />
-      <Route path="/login-page" component={LoginPage} />
-      <Route path="/registration-page" component={RegistrationPage} />
-      <ProtectedRoute path="/" component={MainPage} />
-    </Switch>
-    </userContext.Provider>
-  </Router>
+    <AuthContext.Provider value={{ state, dispatch }}>
+      <Router history={hist}>
+        {state.isAuthenticated ? (
+          <Switch>
+            <Route path="/test-page" component={TestPage} />
+            <Route exact path="/*" component={MainPage} />{" "}
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/login-page" component={LoginPage} />
+            <Route path="/*" component={RegistrationPage} />
+          </Switch>
+        )}
+      </Router>
+    </AuthContext.Provider>
   );
 }
