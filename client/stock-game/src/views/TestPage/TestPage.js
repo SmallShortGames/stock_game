@@ -13,6 +13,8 @@ import Navbar from "../../components/Navbar.js";
 import LoginModal from "../../components/LoginModal.js";
 import RegistrationModal from "../../components/RegistrationModal.js";
 
+import "./TestPage.scss";
+
 export default function TestPage() {
   return (
     <>
@@ -23,9 +25,27 @@ export default function TestPage() {
             <Card>
               <Card.Header>Test Bed</Card.Header>
               <Card.Body>
-                If you made it here, you've logged in!
-                <br />
-                <br />
+                <h2>Patrick's Shit to Sort Out</h2>
+                <ul>
+                  <li>
+                    Figure out how to make useFormik use proper error reports
+                    when user's dont populate the form items like we want them
+                    to
+                  </li>
+                  <li>
+                    I should probably make completely separate components for
+                    the forms for each of the login and registration cards to
+                    use so I dont have to keep bouncing between each form
+                  </li>
+                  <li>
+                    Also remember to ask back end how to run... the back end, essentially
+                  </li>
+                </ul>
+              </Card.Body>
+            </Card>
+            <Card>
+              <Card.Header>Test Bed</Card.Header>
+              <Card.Body>
                 <Link to="/">
                   <Button variant="primary">Return to Main Page</Button>
                 </Link>
