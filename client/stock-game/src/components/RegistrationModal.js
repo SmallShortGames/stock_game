@@ -1,48 +1,17 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+
+import RegistrationForm from "./RegistrationForm.js";
 
 export default function RegistrationModal() {
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
-  const formik = useFormik({
-    initialValues: {
-      registrationUsername: "",
-      registrationEmail: "",
-      password: "",
-      passwordConfirmation: "",
-    },
-
-    validationSchema: Yup.object({
-      registrationUsername: Yup.string()
-        .email("Invalid username")
-        .required("Required"),
-      registrationEmail: Yup.string()
-        .email("Invalid email")
-        .required("Required"),
-      registrationPassword: Yup.string()
-        .required()
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-        ),
-      registrationPasswordConfirm: Yup.string()
-        .required()
-        .oneOf([Yup.ref("password"), null], "Passwords must match"),
-    }),
-
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
 
   return (
     <>
@@ -55,7 +24,10 @@ export default function RegistrationModal() {
           <Modal.Title>Register Account</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form>
+
+        <RegistrationForm />
+
+          {/* <Form>
             <Form.Group controlId="formRegistrationUsername">
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -136,7 +108,7 @@ export default function RegistrationModal() {
             <Link to="/">
               <Button variant="primary">Return to Main Page</Button>
             </Link>
-          </Form>
+          </Form> */}
         </Modal.Body>
         <Modal.Footer className="justify-content-center">
           <Button variant="primary" onClick={handleClose}>

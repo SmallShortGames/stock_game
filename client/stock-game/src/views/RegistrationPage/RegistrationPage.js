@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { useFormik } from "formik";
-import * as Yup from "yup";
 
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -13,44 +11,13 @@ import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
 import Navbar from "../../components/Navbar.js";
-import LoginModal from "../../components/LoginModal.js";
-import RegistrationModal from "../../components/RegistrationModal.js";
+import RegistrationForm from "../../components/RegistrationForm.js";
 import { useAuth } from "../../services/userContext";
 import API from "../../utils/API.js";
 
 import "./RegistrationPage.scss";
 
 export default function RegistrationPage() {
-  const formik = useFormik({
-    initialValues: {
-      registrationUsername: "",
-      registrationEmail: "",
-      password: "",
-      passwordConfirmation: "",
-    },
-
-    validationSchema: Yup.object({
-      registrationUsername: Yup.string()
-        .email("Invalid username")
-        .required("Required"),
-      registrationEmail: Yup.string()
-        .email("Invalid email")
-        .required("Required"),
-      registrationPassword: Yup.string()
-        .required()
-        .matches(
-          /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-          "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-        ),
-      registrationPasswordConfirm: Yup.string()
-        .required()
-        .oneOf([Yup.ref("password"), null], "Passwords must match"),
-    }),
-
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
 
   let history = useHistory();
   const { setAuthTokens } = useAuth();
@@ -96,7 +63,10 @@ export default function RegistrationPage() {
             <Card>
               <Card.Header>Registration Page</Card.Header>
               <Card.Body>
-                <Form>
+
+              <RegistrationForm />
+
+                {/* <Form>
                   <Form.Group controlId="formRegistrationUsername">
                     <Form.Label>Username</Form.Label>
                     <Form.Control
@@ -177,7 +147,7 @@ export default function RegistrationPage() {
                   <Link to="/">
                     <Button variant="primary">Return to Main Page</Button>
                   </Link>
-                </Form>
+                </Form> */}
               </Card.Body>
             </Card>
           </Col>
