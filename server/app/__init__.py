@@ -75,11 +75,9 @@ def viewstock(ticker):
     JOIN company_data ON company_data.company_id = company.id
     WHERE company.ticker = :ticker""", {'ticker': ticker}
                      )
-    # res = db.query(Company, Company_Data).join(
-    #     'id').filter_by(ticker=ticker).all()
 
     return {
-        "data": [json.dumps([c for c in r]) for r in res],
+        "data": [dict(r) for r in res],
         "message": "success"
     }, 200
 
