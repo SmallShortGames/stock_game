@@ -17,5 +17,5 @@ class CompanyJsonEncoder(json.JSONEncoder):
                     d[field] = None
             return d
         elif type(o) is decimal.Decimal:
-            return str(o)
+            return float(o)
         return json.JSONEncoder.default(self, o)
