@@ -1,6 +1,6 @@
 from mongoengine import *
 from datetime import datetime
-from app.models import Portfolio, Company
+from app.models import Portfolio
 
 '''
 This model collates data related to the user's current holdings of a particular stock;
@@ -17,8 +17,8 @@ class Position(Document):
     equity = DecimalField(max_length=15, precision=2)
     current_return = DecimalField(max_length=15, precision=2)
     total_return = DecimalField(max_length=15, precision=2)
-    portfolio_id = ReferenceField(Portfolio)
-    # company_id = ReferenceField(Company)
+    portfolio_id = ReferenceField('Portfolio')
+    company_id = IntField()
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(
         default=datetime.utcnow, onupdate=datetime.utcnow)
