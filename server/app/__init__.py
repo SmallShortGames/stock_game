@@ -1,15 +1,15 @@
-from flask import Flask, request, Response, jsonify
+from flask import Flask, request, Response, jsonify, json
 from flask_cors import CORS
 from markupsafe import escape
 from app.db import Session
 from app.models import User, Portfolio, Position, Company, Company_Data
+from app.json_encoder import CompanyJsonEncoder
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
 from dotenv import load_dotenv, find_dotenv
 import os
-import json
 
 
 load_dotenv(find_dotenv())
@@ -17,6 +17,7 @@ load_dotenv(find_dotenv())
 app = Flask(__name__)
 CORS(app)
 app.config.from_object('config.Development')
+app.json_encoder = CompanyJsonEncoder
 db_url = os.environ.get("MONGODB_URI")
 connect(host=db_url)
 db = Session()
@@ -59,6 +60,7 @@ def buy():
 
 @app.route('/sell', methods=['PUT'])
 def sell():
+    """Route will look like http://game.com/sell?id=xyz123&company=ticker&quantity=100"""
     user_id = request.args.get('id')
     company = request.args.get('company')
     quantity = request.args.get('quantity')
@@ -69,12 +71,17 @@ def sell():
 def viewstock(ticker):
     """Return company data with historical stock data"""
 
-    company = db.execute("""SELECT * FROM company 
-    JOIN company_data ON company_data.company_id = company.id 
-    WHERE company.ticker = (ticker)""", {'ticker': ticker}
-                         )
+    res = db.execute("""SELECT * FROM company
+    JOIN company_data ON company_data.company_id = company.id
+    WHERE company.ticker = :ticker""", {'ticker': ticker}
+                     )
+    # res = db.query(Company, Company_Data).join(
+    #     'id').filter_by(ticker=ticker).all()
 
-    return {"data": [dict(row) for row in company], "message": "success"}, 200
+    return {
+        "data": [json.dumps([c for c in r]) for r in res],
+        "message": "success"
+    }, 200
 
 
 @app.route('/stocks', methods=['GET'])
@@ -83,7 +90,10 @@ def get_all_companies():
     s = select([Company.id, Company.co_name, Company.sector, Company.ticker])
     companies = db.execute(s).fetchall()
     print(companies)
-    return {"data": [dict(row) for row in companies], "message": "Success"}, 200
+    return {
+        "data": [dict(row) for row in companies],
+        "message": "Success"
+    }, 200
 
 
 @app.route('/viewdefinition')
