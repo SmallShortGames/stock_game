@@ -1,24 +1,28 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
+
+import "../src/assets/css/custom.scss";
+
+// import TestPage from "views/TestPage/TestPage.js";
+import MainPage from "./views/MainPage/MainPage.js";
+import TestPage from "./views/TestPage/TestPage.js";
+import LoginPage from "./views/LoginPage/LoginPage.js";
+import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
+import UserProfilePage from "./views/UserProfilePage/UserProfilePage.js";
+
+var hist = createBrowserHistory();
 
 export default function App() {
   return (
-    <Container>
-      <Row>
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      </Row>
-    </Container>
+    <Router history={hist}>
+      <Switch>
+        <Route path="/test-page" component={TestPage} />
+        <Route path="/login-page" component={LoginPage} />
+        <Route path="/registration-page" component={RegistrationPage} />
+        <Route path="/user-profile-page" component={UserProfilePage} />
+        <Route path="/" component={MainPage} />
+      </Switch>
+    </Router>
   );
 }
