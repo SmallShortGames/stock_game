@@ -5,21 +5,16 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
-import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
 
 import Navbar from "../../components/Navbar.js";
 import LoginForm from "../../components/LoginForm";
-import { useAuth } from "../../services/userContext";
+
 import API from "../../utils/API.js";
 
 // import "./RegistrationPage.scss";
 
 export default function LoginPage() {
   let history = useHistory();
-  const { setAuthTokens } = useAuth();
   const [registrationState, setRegistrationState] = useState({
     username: "",
     email: "",
