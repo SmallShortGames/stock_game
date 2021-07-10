@@ -1,8 +1,10 @@
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 
 import Form from "@rjsf/bootstrap-4";
 
 export default function LoginForm() {
+  const [loginState, setLoginState] = useState(null);
+
   const schema = {
     showErrorList: "false",
     type: "object",
@@ -27,17 +29,15 @@ export default function LoginForm() {
     },
   };
 
-  function handleSubmit(event) {
-    event.preventDefault();
-    console.log("I work");
-  }
   return (
     <Form
       schema={schema}
       uiSchema={uiSchema}
       showErrorList={false}
       // noHtml5Validate={true}
-      onSubmit={handleSubmit}
+      formData={loginState}
+      onSubmit={(e) => console.log(loginState)}
+      onChange={(e) => console.log(loginState)}
     />
   );
 }
