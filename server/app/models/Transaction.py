@@ -16,17 +16,16 @@ This model collates data related to making a purchase or selling a stock;
 '''
 
 
-class Transaction(Document):
+class Transaction(EmbeddedDocument):
     buy_side = BooleanField(default=True)
+    company = StringField(required=True, max_length=55)
     exchange = ListField(StringField(required=True, choices=exchange_list,
                          null=False, default="American Stock Exchange (AMEX)"))
-    price = DecimalField(max_length=8, precision=2, required=True, null=False)
-    quantity = DecimalField(max_length=20, precision=2,
+    price = DecimalField(precision=2, required=True, null=False)
+    quantity = DecimalField(precision=2,
                             required=True, null=False)
-    portfolio_id = ReferenceField(Portfolio)
+    # portfolio_id = ReferenceField('Portfolio')
     created_at = DateTimeField(default=datetime.utcnow)
-    updated_at = DateTimeField(
-        default=datetime.utcnow, onupdate=datetime.utcnow)
 
     # @validates('exchange')
 

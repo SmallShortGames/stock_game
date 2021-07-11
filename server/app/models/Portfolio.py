@@ -1,6 +1,6 @@
 from mongoengine import *
 from datetime import datetime
-from app.models import User
+from app.models import User, Position, Transaction
 
 
 '''
@@ -16,6 +16,8 @@ class Portfolio(Document):
     # portfolio_name = StringField(max_length=50, required=True)
     balance = DecimalField(max_length=15, precision=2, nullable=False)
     user_id = ReferenceField('User')
+    positions = ListField(EmbeddedDocumentField('Position'))
+    transactions = ListField(EmbeddedDocumentField('Transaction'))
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(
         default=datetime.utcnow, onupdate=datetime.utcnow)

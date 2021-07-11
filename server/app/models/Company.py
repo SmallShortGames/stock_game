@@ -1,19 +1,6 @@
 from app.db import Base
-from datetime import datetime
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Numeric
-from sqlalchemy.inspection import inspect
 from sqlalchemy.orm import validates
-
-
-# def as_dict(self):
-#     return {c: getattr(self, c) for c in inspect(self).attrs.keys()}
-
-
-# class Serializer(object):
-
-#     @staticmethod
-#     def serialize_lst(lst):
-#         return [l.as_dict() for l in lst]
 
 
 class Company(Base):
