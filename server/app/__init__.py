@@ -2,7 +2,7 @@ from flask import Flask, request, Response, jsonify, json
 from flask_cors import CORS
 from markupsafe import escape
 from app.db import Session
-from app.models import User, Portfolio, Position, Company, Company_Data
+from app.models import User, Portfolio, Position, Company, Company_Data, Transaction
 from app.json_encoder import CompanyJsonEncoder
 from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import select
@@ -25,7 +25,7 @@ db = Session()
 
 @app.route('/hello')
 def hello():
-    return {"key": "value"}
+    return {'key': 'value'}
 
 
 # returns user profile
@@ -35,35 +35,62 @@ def user_profile(user_id):
 
     try:
         user = User.objects(id=user_id).first()
+        portfolio = Portfolio.objects(user_id=user.id).first()
     except AttributeError:
-        print("error")
+        print('error')
     else:
         return {
-            "data": {
-                "id": str(user.id),
-                "username": user.username,
-                "gross_profit": float(user.gross_profit),
-                "total_equity": float(user.total_equity)
+            'data': {
+                'id': str(user.id),
+                'username': user.username,
+                'gross_profit': user.gross_profit,
+                'total_equity': user.total_equity,
+                'balance': portfolio.balance,
+                'positions': portfolio.positions,
+                'transactions': portfolio.transactions
             },
-            "message": "success"
+            'message': 'success'
         }, 200
 
 
-@app.route('/buy', methods=['POST'])
+@app.route('/buy', methods=['PUT'])
 def buy():
-    """Route will look like http://game.com/buy?id=xyz123&company=ticker&quantity=100"""
-    user_id = request.args.get('id')
-    company = request.args.get('company')
-    quantity = request.args.get('quantity')
-    return
+    """Buy route will embed a transaction document within the portfolio class along with either embedding a new position document or updating an existing position"""
+    user_id = request.json['id']  # user id
+    company = request.json['company']  # company ticker
+    quantity = request.json['quantity']  # desired int
+    cost = request.json['cost']  # total cost
+    # query is a work in progress
+    res = db.query(Company).filter_by(ticker=company).first()
+    # db.execute(
+    #     """SELECT * FROM company WHERE ticker = :ticker""", {'ticker': company})
+    t = Transaction(price=cost, quantity=quantity, company=res.co_name)
+    update_p = Portfolio.objects.filter(
+        user_id=user_id).update(add_to_set__transactions=t, dec__balance=cost)
+    update_u = User.objects.filter(
+        id=user_id).update(dec__operating_income=cost)
+
+    user = User.objects.filter(id=user_id).first()
+    portfolio = Portfolio.objects.filter(user_id=user.id).first()
+    # print(json.loads(portfolio.to_json()))
+    return {
+        'data': {
+            'id': str(user.id),
+            'username': user.username,
+            'gross_profit': user.gross_profit,
+            'total_equity': user.total_equity,
+            'portfolio': json.loads(portfolio.to_json())
+        },
+        'message': 'Success'
+    }, 201
 
 
 @app.route('/sell', methods=['PUT'])
 def sell():
     """Route will look like http://game.com/sell?id=xyz123&company=ticker&quantity=100"""
-    user_id = request.args.get('id')
-    company = request.args.get('company')
-    quantity = request.args.get('quantity')
+    user_id = request.json['id']
+    company = request.json['company']
+    quantity = request.json['quantity']
     return
 
 
@@ -77,8 +104,8 @@ def viewstock(ticker):
                      )
 
     return {
-        "data": [dict(r) for r in res],
-        "message": "success"
+        'data': [dict(r) for r in res],
+        'message': 'success'
     }, 200
 
 
@@ -87,10 +114,10 @@ def get_all_companies():
     """Returns a json list of all available companies with their ticker and industry"""
     s = select([Company.id, Company.co_name, Company.sector, Company.ticker])
     companies = db.execute(s).fetchall()
-    print(companies)
+
     return {
-        "data": [dict(row) for row in companies],
-        "message": "Success"
+        'data': [dict(row) for row in companies],
+        'message': 'Success'
     }, 200
 
 
@@ -111,17 +138,17 @@ def login():
         print("error")
     else:
         if exist_user is None:
-            return {"data": None, "message": "User not found"}, 401
+            return {'data': None, 'message': 'User not found'}, 401
         elif not check_password_hash(exist_user.password, password):
-            return {"data": None, "message": "Unauthorized"}, 401
+            return {'data': None, 'message': 'Unauthorized'}, 401
         else:
             return {
-                "data": {
-                    "id": str(exist_user.id),
-                    "username": exist_user.username,
-                    "email": exist_user.email
+                'data': {
+                    'id': str(exist_user.id),
+                    'username': exist_user.username,
+                    'email': exist_user.email
                 },
-                "message": "success!"
+                'message': 'success!'
             }, 200
 
 
@@ -142,15 +169,15 @@ def register():
     try:
         new_user.save()
         user = User.objects.filter(email=email).first()
-        Portfolio(balance=0.00, user_id=user).save()
+        Portfolio(balance=user.operating_income, user_id=user).save()
     except IntegrityError:
-        return {"data": None, "message": "Email already exists"}, 401
+        return {'data': None, 'message': 'Email already exists'}, 401
     else:
         return {
-            "data": {
+            'data': {
                 'id': str(user.id),
                 'username': user.username,
                 'email': user.email
             },
-            "message": "success!"
+            'message': 'success!'
         }, 201
