@@ -63,8 +63,8 @@ export default function LoginPage() {
     <>
       <Navbar />
       <Container className="center">
-        <Row>
-          <Col xs={12}>
+        <Row className="w-50">
+          <Col>
             <Card>
               <Card.Header>Login Page</Card.Header>
               <Card.Body>
@@ -82,7 +82,7 @@ export default function LoginPage() {
                       placeholder="Enter Email"
                     />
                     {formik.touched.loginEmail && formik.errors.loginEmail ? (
-                      <div style={{ color: "red" }}>Enter email</div>
+                      <div style={{ color: "red" }}>Enter Email</div>
                     ) : null}
                     <Form.Text className="text-muted">
                       We'll never share your email with anyone else.
@@ -108,7 +108,6 @@ export default function LoginPage() {
                     <Form.Check type="checkbox" label="Check me out" />
                   </Form.Group>
                   <Form.Group className="mx-auto ml-3">
-                    <Button type="submit">Submit</Button>{" "}
                     <Button variant="primary">Forgot Username</Button>{" "}
                     <Button variant="primary">Forgot Password</Button>{" "}
                     <Button onClick={handleSubmit} variant="primary">
@@ -116,7 +115,6 @@ export default function LoginPage() {
                     </Button>{" "}
                   </Form.Group>
                 </Form>
-                <br />
                 <br />
                 <Link to="/">
                   <Button variant="primary">Return to Main Page</Button>
