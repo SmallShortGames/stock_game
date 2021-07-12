@@ -1,16 +1,9 @@
 from app.db import Base
-from datetime import datetime
-from app.models import Portfolio
 from sqlalchemy import Column, Integer, String, Date, ForeignKey, Numeric
 from sqlalchemy.orm import validates
 
 
-class Serializer():
-    def as_dict(self):
-        return {col.name: getattr(self, col.name) for col in self.__table__.columns}
-
-
-class Company(Base, Serializer):
+class Company(Base):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True)
     co_name = Column(String(50), nullable=False, unique=True)
@@ -20,7 +13,7 @@ class Company(Base, Serializer):
     ipo_date = Column(Date)
 
 
-class Company_Data(Base, Serializer):
+class Company_Data(Base):
     __tablename__ = 'company_data'
     id = Column(Integer, primary_key=True)
     company_id = Column(Integer, ForeignKey('company.id'))
@@ -32,3 +25,6 @@ class Company_Data(Base, Serializer):
     daily_close = Column(Numeric(8, 5))
     vol = Column(Integer)
     volatility = Column(Numeric(20, 20))
+
+    def __json__(self):
+        return ['daily_open', 'high', 'low', 'daily_close', 'volatility']
