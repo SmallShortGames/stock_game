@@ -45,9 +45,7 @@ def user_profile(user_id):
                 'username': user.username,
                 'gross_profit': user.gross_profit,
                 'total_equity': user.total_equity,
-                'balance': portfolio.balance,
-                'positions': portfolio.positions,
-                'transactions': portfolio.transactions
+                'portfolio': json.loads(portfolio.to_json())
             },
             'message': 'success'
         }, 200
@@ -58,21 +56,37 @@ def buy():
     """Buy route will embed a transaction document within the portfolio class along with either embedding a new position document or updating an existing position"""
     user_id = request.json['id']  # user id
     company = request.json['company']  # company ticker
-    quantity = request.json['quantity']  # desired int
     cost = request.json['cost']  # total cost
+    quantity = request.json['quantity']  # desired int
+
     # query is a work in progress
     res = db.query(Company).filter_by(ticker=company).first()
-    # db.execute(
-    #     """SELECT * FROM company WHERE ticker = :ticker""", {'ticker': company})
     t = Transaction(price=cost, quantity=quantity, company=res.co_name)
-    update_p = Portfolio.objects.filter(
-        user_id=user_id).update(add_to_set__transactions=t, dec__balance=cost)
+    p = Position(current_cost=cost/quantity, avg_cost=cost/quantity, quantity=quantity,
+                 current_return=0, total_return=0, company_id=res.id,
+                 company_ticker=res.ticker, company_name=res.co_name)
+    existing_port = Portfolio.objects.filter(user_id=user_id).first()
+
+    if len(existing_port.positions) == 0:
+        print("hello from if statement")
+        updated = existing_port.update(add_to_set__positions=p)
+    else:
+        print("entering for loop")
+        for pos in existing_port.positions:
+            if pos.company_name == p.company_name:
+                pos.avg_cost = (float(pos.current_cost) + cost/quantity)/2
+                pos.current_cost = cost/quantity
+                pos.quantity += quantity
+                break
+        existing_port.save()
+
+    update_p = Portfolio.objects.filter(user_id=user_id).update(
+        add_to_set__transactions=t, dec__balance=cost)
     update_u = User.objects.filter(
         id=user_id).update(dec__operating_income=cost)
-
     user = User.objects.filter(id=user_id).first()
     portfolio = Portfolio.objects.filter(user_id=user.id).first()
-    # print(json.loads(portfolio.to_json()))
+
     return {
         'data': {
             'id': str(user.id),
