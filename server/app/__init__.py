@@ -9,6 +9,7 @@ from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
 from dotenv import load_dotenv, find_dotenv
+from datetime import datetime
 import os
 
 
@@ -60,6 +61,7 @@ def buy():
     quantity = request.json['quantity']  # desired int
 
     # query is a work in progress
+    updated_date = datetime.utcnow
     res = db.query(Company).filter_by(ticker=company).first()
     t = Transaction(price=cost, quantity=quantity, company=res.co_name)
     p = Position(current_cost=cost/quantity, avg_cost=cost/quantity, quantity=quantity,
@@ -68,22 +70,21 @@ def buy():
     existing_port = Portfolio.objects.filter(user_id=user_id).first()
 
     if len(existing_port.positions) == 0:
-        print("hello from if statement")
         updated = existing_port.update(add_to_set__positions=p)
     else:
-        print("entering for loop")
         for pos in existing_port.positions:
             if pos.company_name == p.company_name:
                 pos.avg_cost = (float(pos.current_cost) + cost/quantity)/2
                 pos.current_cost = cost/quantity
                 pos.quantity += quantity
+                pos.updated_at = updated_date
                 break
         existing_port.save()
 
     update_p = Portfolio.objects.filter(user_id=user_id).update(
-        add_to_set__transactions=t, dec__balance=cost)
+        add_to_set__transactions=t, dec__balance=cost, updated_at=updated_date)
     update_u = User.objects.filter(
-        id=user_id).update(dec__operating_income=cost)
+        id=user_id).update(dec__operating_income=cost, updated_at=updated_date)
     user = User.objects.filter(id=user_id).first()
     portfolio = Portfolio.objects.filter(user_id=user.id).first()
 
@@ -96,16 +97,58 @@ def buy():
             'portfolio': json.loads(portfolio.to_json())
         },
         'message': 'Success'
-    }, 201
+    }, 200
 
 
 @app.route('/sell', methods=['PUT'])
 def sell():
-    """Route will look like http://game.com/sell?id=xyz123&company=ticker&quantity=100"""
-    user_id = request.json['id']
-    company = request.json['company']
-    quantity = request.json['quantity']
-    return
+    """Sell route will subtract the quantity of the given stock and embed a new transaction document within the portfolio"""
+    user_id = request.json['id']  # user id
+    company = request.json['company']  # company ticker
+    cost = request.json['cost']  # total cost
+    quantity = request.json['quantity']  # desired int
+
+    # query is a work in progress
+    updated_date = datetime.utcnow
+    res = db.query(Company).filter_by(ticker=company).first()
+    t = Transaction(buy_side=False, price=cost,
+                    quantity=quantity, company=res.co_name)
+    p = Position(current_cost=cost/quantity, avg_cost=cost/quantity, quantity=quantity,
+                 current_return=0, total_return=0, company_id=res.id,
+                 company_ticker=res.ticker, company_name=res.co_name)
+    existing_port = Portfolio.objects.filter(user_id=user_id).first()
+
+    if len(existing_port.positions) == 0:
+        return {'data': {}, 'message': 'Failure to find current amount. This is likely an error in the server'}, 400
+    else:
+        for pos in existing_port.positions:
+            if pos.company_name == p.company_name:
+                pos.avg_cost = (float(pos.current_cost) + cost/quantity)/2
+                pos.current_cost = cost/quantity
+                if pos.quantity - quantity < 0:
+                    return {'data': {}, 'message': 'Insufficient quantity held please try again'}, 400
+                pos.quantity -= quantity
+                pos.updated_at = updated_date
+                break
+        existing_port.save()
+
+    update_p = Portfolio.objects.filter(user_id=user_id).update(
+        add_to_set__transactions=t, inc__balance=cost, updated_at=updated_date)
+    update_u = User.objects.filter(
+        id=user_id).update(inc__operating_income=cost, updated_at=updated_date)
+    user = User.objects.filter(id=user_id).first()
+    portfolio = Portfolio.objects.filter(user_id=user.id).first()
+
+    return {
+        'data': {
+            'id': str(user.id),
+            'username': user.username,
+            'gross_profit': user.gross_profit,
+            'total_equity': user.total_equity,
+            'portfolio': json.loads(portfolio.to_json())
+        },
+        'message': 'Success'
+    }, 200
 
 
 @app.route('/viewstock/<ticker>', methods=['GET'])
