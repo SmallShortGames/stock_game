@@ -22,9 +22,9 @@ class User(Document):
     username = StringField(max_length=30, required=True, null=False)
     email = StringField(max_length=50, required=True, unique=True, null=False)
     password = StringField(max_length=255, required=True, null=False)
-    operating_income = DecimalField(max_length=15, precision=2)
-    gross_profit = DecimalField(max_length=15, precision=2)
-    total_equity = DecimalField(max_length=15, precision=2)
+    operating_income = DecimalField(precision=2)
+    gross_profit = DecimalField(precision=2)
+    total_equity = DecimalField(precision=2)
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(
         default=datetime.utcnow, onupdate=datetime.utcnow)
