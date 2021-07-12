@@ -18,7 +18,7 @@ TODO: include installation instructions here.
    - Windows run `> python -m venv venv`
 3. Once installed run the following command and start your virtual environment shell should look something like `(venv) $ ` after run successfully
    - macOS/Linux `$ . venv/bin/activate`
-   - Windows `> venv\Scripts\activate`
+   - Windows `> .\venv\Scripts\activate`
 4. Install all requirements needed
    - `pip install -r requirements.txt`
 5. Set environment variables for Flask
