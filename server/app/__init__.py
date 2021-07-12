@@ -11,7 +11,6 @@ from dotenv import load_dotenv, find_dotenv
 import os
 import json
 
-
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)

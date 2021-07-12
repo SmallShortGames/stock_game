@@ -8,6 +8,6 @@ load_dotenv(find_dotenv())
 
 Base = declarative_base()
 
-db = create_engine(environ.get('MYSQL_DB'), echo=True)
+db = create_engine(environ.get('MYSQL_URI'), echo=True)
 
 Session = sessionmaker(bind=db)
