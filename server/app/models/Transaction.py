@@ -22,9 +22,7 @@ class Transaction(EmbeddedDocument):
     exchange = ListField(StringField(required=True, choices=exchange_list,
                          null=False, default="American Stock Exchange (AMEX)"))
     price = DecimalField(precision=2, required=True, null=False)
-    quantity = DecimalField(precision=2,
-                            required=True, null=False)
-    # portfolio_id = ReferenceField('Portfolio')
+    quantity = IntField(required=True, null=False)
     created_at = DateTimeField(default=datetime.utcnow)
 
     # @validates('exchange')

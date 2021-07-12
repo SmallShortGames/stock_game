@@ -11,16 +11,16 @@ This model collates data related to the user's current holdings of a particular 
 
 class Position(EmbeddedDocument):
     # volume = DecimalField(max_length=15, precision=2)
-    current_cost = DecimalField(max_length=15, precision=2)
-    avg_cost = DecimalField(max_length=15, precision=2)
+    current_cost = DecimalField(precision=2)
+    avg_cost = DecimalField(precision=2)
     quantity = IntField()
-    equity = DecimalField(max_length=15, precision=2)
-    current_return = DecimalField(max_length=15, precision=2)
-    total_return = DecimalField(max_length=15, precision=2)
+    equity = DecimalField(precision=2)
+    current_return = DecimalField(precision=2)
+    total_return = DecimalField(precision=2)
     # portfolio_id = ReferenceField('Portfolio')
     company_id = IntField()
     company_ticker = StringField(max_length=6)
-    company_name = StringField(max_length=55)
+    company_name = StringField(max_length=55, primary_key=True)
     created_at = DateTimeField(default=datetime.utcnow)
     updated_at = DateTimeField(
         default=datetime.utcnow, onupdate=datetime.utcnow)
