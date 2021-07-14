@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-
 import Form from "@rjsf/bootstrap-4";
+import { AuthContext } from "../App";
+import API from "../utils/API";
 
 export default function LoginForm() {
-  const [loginState, setLoginState] = useState(null);
-
+  const { dispatch } = React.useContext(AuthContext);
   const schema = {
     showErrorList: "false",
     type: "object",
@@ -29,15 +29,26 @@ export default function LoginForm() {
     },
   };
 
+  function handleSubmit(data) {
+    const temp = {
+      email: data.email,
+      password: data.password,
+    };
+    console.log(temp);
+    API.userLogin(temp)
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  }
+
   return (
     <Form
       schema={schema}
       uiSchema={uiSchema}
       showErrorList={false}
-      // noHtml5Validate={true}
-      formData={loginState}
-      onSubmit={(e) => console.log(loginState)}
-      onChange={(e) => console.log(loginState)}
+      noHtml5Validate={true}
+      onSubmit={({ formData }) => handleSubmit(formData)}
     />
   );
 }
