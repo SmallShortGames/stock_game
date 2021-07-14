@@ -47,13 +47,20 @@ export default function App() {
   return (
     <AuthContext.Provider value={{ state, dispatch }}>
       <Router history={hist}>
-        <Switch>
-          <Route path="/test-page" component={TestPage} />
-          <Route path="/login-page" component={LoginPage} />
-          <Route path="/registration-page" component={RegistrationPage} />
-          <Route path="/user-profile-page" component={UserProfilePage} />
-          <Route path="/" component={MainPage} />
-        </Switch>
+        {state.isAuthenticated ? (
+          <Switch>
+            <Route path="/test-page" component={TestPage} />
+
+            <Route path="/user-profile-page" component={UserProfilePage} />
+            <Route path="/" component={MainPage} />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/login-page" component={LoginPage} />
+            <Route path="/registration-page" component={RegistrationPage} />
+            <Route path="/*" component={RegistrationPage} />
+          </Switch>
+        )}
       </Router>
     </AuthContext.Provider>
   );

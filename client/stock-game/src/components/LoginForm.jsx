@@ -37,7 +37,10 @@ export default function LoginForm() {
     console.log(temp);
     API.userLogin(temp)
       .then((res) => {
-        console.log(res);
+        if (res.statusText === "OK" || res.status === 200) {
+          dispatch({ type: "LOGIN", payload: res.data });
+        }
+        throw res;
       })
       .catch((err) => console.log(err));
   }
