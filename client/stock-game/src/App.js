@@ -1,24 +1,67 @@
-import Container from "react-bootstrap/Container";
-import Row from "react-bootstrap/Row";
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
+import React from "react";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
+
+import "../src/assets/css/custom.scss";
+
+import MainPage from "./views/MainPage/MainPage.js";
+import TestPage from "./views/TestPage/TestPage.js";
+import LoginPage from "./views/LoginPage/LoginPage.js";
+import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
+import UserProfilePage from "./views/UserProfilePage/UserProfilePage.js";
+
+var hist = createBrowserHistory();
+
+export const AuthContext = React.createContext();
+
+const initialState = {
+  isAuthenticated: false,
+  user: null,
+  token: null,
+};
+const reducer = (state, action) => {
+  switch (action.type) {
+    case "LOGIN":
+      localStorage.setItem("user", JSON.stringify(action.payload.user));
+      localStorage.setItem("token", JSON.stringify(action.payload.token));
+      return {
+        ...state,
+        isAuthenticated: true,
+        user: action.payload.user,
+        token: action.payload.token,
+      };
+    case "LOGOUT":
+      localStorage.clear();
+      return {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      };
+    default:
+      return state;
+  }
+};
 
 export default function App() {
+  const [state, dispatch] = React.useReducer(reducer, initialState);
   return (
-    <Container>
-      <Row>
-        <Card style={{ width: "18rem" }}>
-          <Card.Img variant="top" src="holder.js/100px180" />
-          <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-              Some quick example text to build on the card title and make up the
-              bulk of the card's content.
-            </Card.Text>
-            <Button variant="primary">Go somewhere</Button>
-          </Card.Body>
-        </Card>
-      </Row>
-    </Container>
+    <AuthContext.Provider value={{ state, dispatch }}>
+      <Router history={hist}>
+        {state.isAuthenticated ? (
+          <Switch>
+            <Route path="/test-page" component={TestPage} />
+
+            <Route path="/user-profile-page" component={UserProfilePage} />
+            <Route path="/" component={MainPage} />
+          </Switch>
+        ) : (
+          <Switch>
+            <Route path="/login-page" component={LoginPage} />
+            <Route path="/registration-page" component={RegistrationPage} />
+            <Route path="/*" component={RegistrationPage} />
+          </Switch>
+        )}
+      </Router>
+    </AuthContext.Provider>
   );
 }
