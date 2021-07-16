@@ -12,7 +12,6 @@ from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
 import os
 
-
 load_dotenv(find_dotenv())
 
 app = Flask(__name__)
