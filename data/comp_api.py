@@ -1,5 +1,6 @@
 from sqlalchemy import create_engine, Column, Integer, String, DateTime, ForeignKey, Enum, Numeric, Date
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.ext.declarative import declarative_base
 import os
 import pymysql
 import csv
@@ -8,17 +9,18 @@ from dotenv import load_dotenv, find_dotenv
 
 load_dotenv(find_dotenv())
 # db_string = f"postgres://postgres:{db_password}@127.0.0.1:5432/Stocks_Game_db"
+
 db_string = os.environ.get('MYSQL_DB')
 
 engine = create_engine(db_string, echo=True)
-Session = sessionmaker(engine)
+Session = sessionmaker(bind=engine)
 Base = declarative_base()
-
 
 class Company(Base):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True)
-    co_name = Column(String(50), nullable=False, unique=True)
+    co_name = Column(String(50), nullable=False)
+    # co_name = Column(String(50), nullable=False, unique=True)
     ticker = Column(String(5))
     sector = Column(String(50))
     per = Column(String(5))
@@ -38,10 +40,10 @@ class Company_Data(Base):
     vol = Column(Integer)
     volatility = Column(Numeric(20, 20))
 
+# Base.metadata.create_all(bind=engine)
 
 company_dict = {}
 data_dict = {}
-# with Session() as session:
 
 # keys
 # SECTOR,TICKER,NAME,PER,DATE,TIME,OPEN,HIGH,LOW,CLOSE,VOL,VOLATILITY,IPO_DATE
@@ -85,3 +87,5 @@ with Session() as session:
                                      vol=data_dict[ticker][dt]['vol'],
                                      volatility=data_dict[ticker][dt]['volatility']))
     session.commit()
+
+
