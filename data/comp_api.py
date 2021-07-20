@@ -19,8 +19,7 @@ Base = declarative_base()
 class Company(Base):
     __tablename__ = 'company'
     id = Column(Integer, primary_key=True)
-    co_name = Column(String(50), nullable=False)
-    # co_name = Column(String(50), nullable=False, unique=True)
+    co_name = Column(String(50), nullable=False, unique=True)
     ticker = Column(String(5))
     sector = Column(String(50))
     per = Column(String(5))

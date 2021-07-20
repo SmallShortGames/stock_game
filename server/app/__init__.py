@@ -18,6 +18,7 @@ app = Flask(__name__)
 CORS(app)
 app.config.from_object('config.Development')
 app.json_encoder = CompanyJsonEncoder
+
 db_url = os.environ.get("MONGODB_URI")
 connect(host=db_url)
 db = Session()

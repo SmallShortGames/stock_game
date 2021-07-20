@@ -20,3 +20,5 @@ class Development(Config):
     FLASK_ENV = 'development'
     FLASK_DEBUG = True
     # DATABASE_URI = environ.get('DEV_DB_URI')
+
+

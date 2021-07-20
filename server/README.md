@@ -8,7 +8,7 @@ TODO: include installation instructions here.
 
 `MONGODB_URI` with the uri string to a mongodb database
 `SECRET_KEY` with a generated secret key (Not that important while testing)
-`MYSQL_URI` We dont have this completed yet but will need it once Company Data is integrated
+`MYSQL_DB=mysql+pymysql://username:password@localhost/database_name`
 
 ## Starting up server
 
@@ -22,6 +22,7 @@ TODO: include installation instructions here.
 4. Install all requirements needed
    - `pip install -r requirements.txt`
 5. Set environment variables for Flask
+   - create .flaskenv file containing `FLASK_APP=app` and `FLASK_ENV=development` and add to .gitignore
    - bash `$ export FLASK_APP=app` then `$ export FLASK_ENV=development`
    - CMD `> set FLASK_APP=app` then `> set FLASK_ENV=development`
    - PowerShell `> $env:FLASK_APP = "app"` then `> $env:FLASK_ENV = "development"`
