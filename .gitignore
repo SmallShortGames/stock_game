@@ -132,7 +132,7 @@ yarn-error.log*
 # compiled css
 *.css
 venv/
-reactFlask/
+stock_game/
 
 *.pyc
 __pycache__/

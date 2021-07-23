@@ -4,10 +4,10 @@ from markupsafe import escape
 from app.db import Session
 from app.models import User, Portfolio, Position, Company, Company_Data, Transaction
 from app.json_encoder import CompanyJsonEncoder
-from werkzeug.security import check_password_hash, generate_password_hash
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from mongoengine import connect
+from werkzeug.security import check_password_hash, generate_password_hash
 from dotenv import load_dotenv, find_dotenv
 from datetime import datetime
 import os
@@ -55,10 +55,10 @@ def user_profile(user_id):
 @app.route('/buy', methods=['PUT'])
 def buy():
     """Buy route will embed a transaction document within the portfolio class along with either embedding a new position document or updating an existing position"""
-    user_id = request.json['id']  # user id
     company = request.json['company']  # company ticker
     cost = request.json['cost']  # total cost
     quantity = request.json['quantity']  # desired int
+    user_id = request.json['id']  # user id
 
     # query is a work in progress
     updated_date = datetime.utcnow
