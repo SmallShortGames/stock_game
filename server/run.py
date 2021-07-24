@@ -1,0 +1,6 @@
+from flask import Flask
+from flask_app import app
+
+app.run(
+    debug = True
+)
