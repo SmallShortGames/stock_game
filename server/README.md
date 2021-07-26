@@ -6,9 +6,9 @@ TODO: include installation instructions here.
 
 ## .env Config
 
-`MONGODB_URI` with the uri string to a mongodb database
-`SECRET_KEY` with a generated secret key (Not that important while testing)
-`MYSQL_URI` We dont have this completed yet but will need it once Company Data is integrated
+`MONGODB_URI=mongodb+srv://username:password@cluster0.j2wof.mongodb.net/your-db-name?retryWrites=true&w=majority`
+`SECRET_KEY with a generated secret key (Not that important while testing)`
+`MYSQL_DB=mysql+pymysql://username:password@localhost/database_name`
 
 ## Starting up server
 

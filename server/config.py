@@ -1,11 +1,13 @@
 from os import environ, path
 from dotenv import load_dotenv, find_dotenv
 
+'''file splits config values to manage configuration depending on which environment is running'''
 
 load_dotenv(find_dotenv())
 
-
-class Config(object):
+# class Config(object):
+class Config:
+    '''base config'''
     SECRET_KEY = environ.get('SECRET_KEY')
 
 
