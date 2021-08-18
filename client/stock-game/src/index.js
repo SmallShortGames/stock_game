@@ -17,3 +17,25 @@ ReactDOM.render(
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
+
+// by SmallShortGames, 2021
+// 
+// remember to stay classy
+// .-----.
+// \ ' /   _/    )/
+// - ( ) -('---''--)
+// / . \((()\^_^/)()
+//  \\_\ (()_)-((()()
+//   '- \ )/\._./(()
+//     '/\/( X   ) \
+//     (___)|___/ ) \
+//          |.#_|(___)
+//         /\    \ ( (_
+//         \/\/\/\) \\
+//         | / \ |
+//         |(   \|
+//        _|_)__|_\_
+//        )...()...(
+//         | (   \ |     
+//      .-'__,)  (  \
+//  pjf           '\_-,

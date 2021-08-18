@@ -27,18 +27,11 @@ export default function TestPage() {
                 <h2>Patrick's Stuff to Sort Out</h2>
                 <ul>
                   <li>
-                    Figure out how to make useFormik use proper error reports
-                    when user's dont populate the form items like we want them
-                    to
-                  </li>
-                  <li>
-                    I should probably make completely separate components for
-                    the forms for each of the login and registration cards to
-                    use so I dont have to keep bouncing between each form
-                  </li>
-                  <li>
-                    Also remember to ask back end how to run... the back end,
+                    gotta remember to ask back end how to run... the back end,
                     essentially
+                  </li>
+                  <li>
+                    Figure out how to stop the dev environment from crashing when the login/registration boxes are empty
                   </li>
                 </ul>
               </Card.Body>
