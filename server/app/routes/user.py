@@ -71,7 +71,7 @@ def register():
     try:
         new_user.save()
         user = User.User.objects.filter(email=email).first()
-        Portfolio(balance=user.operating_income, user_id=user).save()
+        Portfolio.Portfolio(balance=user.operating_income, user_id=user).save()
     except IntegrityError:
         return {'data': None, 'message': 'Email already exists'}, 401
     else:
