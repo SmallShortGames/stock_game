@@ -10,15 +10,14 @@ import Form from "react-bootstrap/Form";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-import Navbar from "../../components/Navbar.js";
-import RegistrationForm from "../../components/RegistrationForm.js";
+import Navbar from "../../components/Navbar/index.jsx";
+import RegistrationForm from "../../components/Forms/registrationForm";
 import { useAuth } from "../../services/userContext";
 import API from "../../utils/API.js";
 
 import "./RegistrationPage.scss";
 
 export default function RegistrationPage() {
-
   let history = useHistory();
   const { setAuthTokens } = useAuth();
   const [registrationState, setRegistrationState] = useState({
@@ -63,8 +62,7 @@ export default function RegistrationPage() {
             <Card>
               <Card.Header>Registration Page</Card.Header>
               <Card.Body>
-
-              <RegistrationForm />
+                <RegistrationForm />
 
                 {/* <Form>
                   <Form.Group controlId="formRegistrationUsername">

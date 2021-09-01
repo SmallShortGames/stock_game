@@ -10,8 +10,9 @@ export default function RegistrationForm() {
       errors.username.addError("Username needs to use at least 8 characters");
     }
 
-    const mailformat = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    
+    const mailformat =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
     if (mailformat.test(formData.email)) {
       return true;
     } else {
@@ -22,7 +23,11 @@ export default function RegistrationForm() {
 
     if (passwordformat.test(formData.password)) {
       return true;
-    } else if (formData.password === undefined || formData.password === "" || formData.password.length < 6) {
+    } else if (
+      formData.password === undefined ||
+      formData.password === "" ||
+      formData.password.length < 6
+    ) {
       errors.password.addError("Password needs to use at least 8 characters");
     } else {
       errors.password.addError(
