@@ -1,10 +1,16 @@
 // To-do: replace with
-
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../App";
 
 import "./style.css";
 
 export default function Navbar() {
+  const { dispatch } = React.useContext(AuthContext);
+
+  function handleLogout() {
+    dispatch({ type: "LOGOUT", payload: {} });
+  }
   return (
     <>
       <header>
@@ -23,7 +29,7 @@ export default function Navbar() {
               <Link to="/home">Home</Link>
             </li>
             <li>
-              <Link to="/logout">Logout</Link>
+              <Link onClick={handleLogout}>Logout</Link>
             </li>
           </ul>
         </div>
