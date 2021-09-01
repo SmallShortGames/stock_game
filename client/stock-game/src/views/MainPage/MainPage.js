@@ -9,7 +9,6 @@ import Form from "react-bootstrap/Form";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-import Navbar from "../../components/Navbar/index.jsx";
 import TestChart from "../../components/TestChart.js";
 import LoginModal from "../../components/LoginModal.js";
 import RegistrationModal from "../../components/RegistrationModal.js";

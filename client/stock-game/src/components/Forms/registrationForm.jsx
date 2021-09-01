@@ -25,7 +25,7 @@ export default function RegistrationForm() {
     event.preventDefault();
     API.userRegister(registrationState)
       .then((response) => {
-        if (response.status == "201") {
+        if (response.status === "201") {
           dispatch({ type: "LOGIN", payload: response.data.data });
         } else {
           console.log(response);

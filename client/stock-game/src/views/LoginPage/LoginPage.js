@@ -11,7 +11,6 @@ import LoginForm from "../../components/LoginForm";
 export default function LoginPage() {
   return (
     <>
-      <Navbar />
       <Container className="center">
         <Row className="w-75">
           <Col>
