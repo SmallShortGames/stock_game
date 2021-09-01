@@ -26,6 +26,9 @@ export default function Navbar() {
               <Link to="/profile">Profile</Link>
             </li>
             <li>
+              <Link to="/search">Search</Link>
+            </li>
+            <li>
               <Link to="/home">Home</Link>
             </li>
             <li>
