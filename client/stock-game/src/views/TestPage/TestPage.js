@@ -9,7 +9,7 @@ import Button from "react-bootstrap/Button";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-import Navbar from "../../components/Navbar.js";
+import Navbar from "../../components/Navbar/index.jsx";
 import RegistrationForm from "../../components/RegistrationForm.js";
 
 import "./TestPage.scss";
@@ -31,7 +31,8 @@ export default function TestPage() {
                     essentially
                   </li>
                   <li>
-                    Figure out how to stop the dev environment from crashing when the login/registration boxes are empty
+                    Figure out how to stop the dev environment from crashing
+                    when the login/registration boxes are empty
                   </li>
                 </ul>
               </Card.Body>

@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 
-import Navbar from "../../components/Navbar.js";
+import Navbar from "../../components/Navbar/";
 import LoginForm from "../../components/LoginForm";
 
 // import "./RegistrationPage.scss";

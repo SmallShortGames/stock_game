@@ -8,7 +8,7 @@ import MainPage from "./views/MainPage/MainPage.js";
 import TestPage from "./views/TestPage/TestPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
-import UserProfilePage from "./views/UserProfilePage/UserProfilePage.js";
+import Profile from "./views/Profile";
 
 var hist = createBrowserHistory();
 
@@ -19,15 +19,16 @@ const initialState = {
   user: null,
   token: null,
 };
+
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.user));
-      localStorage.setItem("token", JSON.stringify(action.payload.token));
+      localStorage.setItem("user", JSON.stringify(action.payload.id));
+      localStorage.setItem("token", JSON.stringify("token"));
       return {
         ...state,
         isAuthenticated: true,
-        user: action.payload.user,
+        user: action.payload.username,
         token: action.payload.token,
       };
     case "LOGOUT":
@@ -49,18 +50,15 @@ export default function App() {
       <Router history={hist}>
         {state.isAuthenticated ? (
           <Switch>
-            <Route path="/test-page" component={TestPage} />
-
-            <Route path="/user-profile-page" component={UserProfilePage} />
-            <Route path="/" component={MainPage} />
+            <Route path="/profile" component={Profile} />
+            <Route path="/test" component={TestPage} />
+            <Route path="/*" component={MainPage} />
           </Switch>
         ) : (
           <Switch>
-            <Route path="/login-page" component={LoginPage} />
-            <Route path="/registration-page" component={RegistrationPage} />
-            <Route path="/test-page" component={TestPage} />
-            <Route path="/user-profile-page" component={UserProfilePage} />
-            <Route path="/*" component={MainPage} />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/registration" component={RegistrationPage} />
+            <Route path="/*" component={RegistrationPage} />
           </Switch>
         )}
       </Router>

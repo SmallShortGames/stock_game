@@ -21,7 +21,9 @@ export default function App() {
             <NavDropdown.Item href="/registration-page">
               Registration
             </NavDropdown.Item>
-            <NavDropdown.Item href="/user-profile-page">User Profile Page</NavDropdown.Item>
+            <NavDropdown.Item>
+              <Link to="/user-profile-page">User Profile Page</Link>
+            </NavDropdown.Item>
             <NavDropdown.Divider />
             <NavDropdown.Item href="#action/3.4">
               Separated link
