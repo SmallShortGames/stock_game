@@ -1,4 +1,4 @@
-from flask import Blueprint, request, Response, jsonify, json, session
+from flask import Blueprint, request, make_response, jsonify, json, session
 from app.models import User, Portfolio, Position, Company, Transaction
 from werkzeug.security import check_password_hash, generate_password_hash
 
