@@ -2,7 +2,7 @@
 
 import { Link } from "react-router-dom";
 
-import "./index.css";
+import "./style.css";
 
 export default function Navbar() {
   return (

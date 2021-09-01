@@ -8,7 +8,7 @@ import MainPage from "./views/MainPage/MainPage.js";
 import TestPage from "./views/TestPage/TestPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
-import UserProfilePage from "./views/UserProfilePage/UserProfilePage.js";
+import Profile from "./views/Profile";
 
 var hist = createBrowserHistory();
 
@@ -23,7 +23,7 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN":
-      localStorage.setItem("user", JSON.stringify(action.payload.username));
+      localStorage.setItem("user", JSON.stringify(action.payload.id));
       localStorage.setItem("token", JSON.stringify("token"));
       return {
         ...state,
@@ -50,7 +50,7 @@ export default function App() {
       <Router history={hist}>
         {state.isAuthenticated ? (
           <Switch>
-            <Route path="/profile" component={UserProfilePage} />
+            <Route path="/profile" component={Profile} />
             <Route path="/test" component={TestPage} />
             <Route path="/*" component={MainPage} />
           </Switch>
