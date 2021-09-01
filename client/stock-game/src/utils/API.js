@@ -1,12 +1,16 @@
-import axios from 'axios';
+import axios from "axios";
 
 const API = {
-    userRegister: function(user) {
-        return axios.post("/register", user)
-    },
-    userLogin: function(user) {
-        return axios.post("/login", user)
-    }
-}
+  userData: function (userID) {
+    const path = "user/" + userID;
+    return axios.get(path);
+  },
+  userLogin: function (user) {
+    return axios.post("user/login", user);
+  },
+  userRegister: function (user) {
+    return axios.post("user/register", user);
+  },
+};
 
 export default API;

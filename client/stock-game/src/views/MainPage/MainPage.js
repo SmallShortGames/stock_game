@@ -9,7 +9,7 @@ import Form from "react-bootstrap/Form";
 import Tabs from "react-bootstrap/Tabs";
 import Tab from "react-bootstrap/Tab";
 
-import Navbar from "../../components/Navbar.js";
+import Navbar from "../../components/Navbar/index.jsx";
 import TestChart from "../../components/TestChart.js";
 import LoginModal from "../../components/LoginModal.js";
 import RegistrationModal from "../../components/RegistrationModal.js";
@@ -47,9 +47,7 @@ export default function MainPage() {
                     </Row>
                   </Tab>
                   <Tab eventKey="number2" title="Pages">
-                    <Card.Text>
-                      Different pages
-                    </Card.Text>
+                    <Card.Text>Different pages</Card.Text>
                     <Row className="justify-content-center">
                       <Col>
                         <Link to="test-page">
