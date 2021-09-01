@@ -8,8 +8,6 @@ import Col from "react-bootstrap/Col";
 import Navbar from "../../components/Navbar/";
 import LoginForm from "../../components/LoginForm";
 
-// import "./RegistrationPage.scss";
-
 export default function LoginPage() {
   return (
     <>
