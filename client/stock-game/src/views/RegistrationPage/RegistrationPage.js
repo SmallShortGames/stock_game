@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
@@ -19,6 +19,9 @@ export default function RegistrationPage() {
               <Card.Header>Registration Page</Card.Header>
               <Card.Body>
                 <RegistrationForm />
+                <p>
+                  Already have an account? <Link to="/login">Log in!</Link>
+                </p>
               </Card.Body>
             </Card>
           </Col>

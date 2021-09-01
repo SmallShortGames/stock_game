@@ -17,12 +17,6 @@ export default function Navbar() {
         <div className="navbar_wrapper">
           <ul className="navbar_list">
             <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/registration">Sign Up</Link>
-            </li>
-            <li>
               <Link to="/profile">Profile</Link>
             </li>
             <li>

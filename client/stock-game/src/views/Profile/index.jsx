@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../../utils/API";
 import "./style.css";
-import Navbar from "../../components/Navbar/";
 
 export default function Profile() {
   const [userData, setUserData] = useState({
