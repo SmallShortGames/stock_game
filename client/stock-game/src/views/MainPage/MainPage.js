@@ -17,7 +17,6 @@ import RegistrationModal from "../../components/RegistrationModal.js";
 export default function MainPage() {
   return (
     <>
-      <Navbar />
       <Container>
         <TestChart />
         <Row>

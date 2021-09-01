@@ -23,7 +23,6 @@ export default function Profile() {
   if (userData.isLoaded) {
     return (
       <>
-        <Navbar />
         <div className="profile_container">
           <div className="profile_heading_container">
             <h3>{userData.username}'s Profile</h3>
