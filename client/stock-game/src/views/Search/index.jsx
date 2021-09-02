@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import CandleStickChart from "../../components/CandleStickChart";
 
 import API from "../../utils/API";
 
@@ -42,7 +43,14 @@ export default function Search() {
 
   function SearchResult() {
     if (searchState != null) {
-      return JSON.stringify(searchState.data[0]);
+      return (
+        <>
+          <CandleStickChart
+            data={searchState.data}
+            name={searchState.data[0].co_name}
+          />
+        </>
+      );
     } else {
       return null;
     }
