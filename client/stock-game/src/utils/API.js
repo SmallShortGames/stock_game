@@ -1,6 +1,13 @@
 import axios from "axios";
 
 const API = {
+  getStockTickers: function () {
+    return axios.get("api/stocks");
+  },
+  getStockData: function (ticker) {
+    const path = "/api/viewstock/" + ticker;
+    return axios.get(path);
+  },
   userData: function (userID) {
     const path = "user/" + userID;
     return axios.get(path);
