@@ -5,9 +5,6 @@ import Row from "react-bootstrap/Row";
 import Card from "react-bootstrap/Card";
 import Col from "react-bootstrap/Col";
 import Button from "react-bootstrap/Button";
-// import Form from "react-bootstrap/Form";
-import Tabs from "react-bootstrap/Tabs";
-import Tab from "react-bootstrap/Tab";
 
 import Navbar from "../../components/Navbar/index.jsx";
 import RegistrationForm from "../../components/RegistrationForm.js";

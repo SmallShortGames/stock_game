@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React from "react";
+import { Link } from "react-router-dom";
 import Form from "@rjsf/bootstrap-4";
 import { AuthContext } from "../App";
 import API from "../utils/API";
@@ -47,12 +48,18 @@ export default function LoginForm() {
   }
 
   return (
-    <Form
-      schema={schema}
-      uiSchema={uiSchema}
-      showErrorList={false}
-      noHtml5Validate={true}
-      onSubmit={({ formData }) => handleSubmit(formData)}
-    />
+    <>
+      <Form
+        schema={schema}
+        uiSchema={uiSchema}
+        showErrorList={false}
+        noHtml5Validate={true}
+        onSubmit={({ formData }) => handleSubmit(formData)}
+      />
+      <br />
+      <p>
+        Don't have an account? <Link to="/registration">Sign up!</Link>
+      </p>
+    </>
   );
 }
