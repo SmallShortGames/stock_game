@@ -1,6 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify, json, session
 from app.models import User, Portfolio, Position, Company, Transaction
 from werkzeug.security import check_password_hash, generate_password_hash
+from app.tokens import encode_auth_token, decode_token
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 
