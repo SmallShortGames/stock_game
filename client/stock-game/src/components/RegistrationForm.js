@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 import Form from "@rjsf/bootstrap-4";
 
 export default function RegistrationForm() {

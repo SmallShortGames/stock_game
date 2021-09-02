@@ -4,11 +4,14 @@ import { Router, Route, Switch } from "react-router-dom";
 
 import "../src/assets/css/custom.scss";
 
+import DashboardLayout from "./layouts/DashboardLayout";
+
 import MainPage from "./views/MainPage/MainPage.js";
 import TestPage from "./views/TestPage/TestPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
 import RegistrationPage from "./views/RegistrationPage/RegistrationPage.js";
 import Profile from "./views/Profile";
+import Search from "./views/Search";
 
 var hist = createBrowserHistory();
 
@@ -49,11 +52,14 @@ export default function App() {
     <AuthContext.Provider value={{ state, dispatch }}>
       <Router history={hist}>
         {state.isAuthenticated ? (
-          <Switch>
-            <Route path="/profile" component={Profile} />
-            <Route path="/test" component={TestPage} />
-            <Route path="/*" component={MainPage} />
-          </Switch>
+          <DashboardLayout>
+            <Switch>
+              <Route path="/profile" component={Profile} />
+              <Route path="/search" component={Search} />
+              <Route path="/test" component={TestPage} />
+              <Route path="/*" component={MainPage} />
+            </Switch>
+          </DashboardLayout>
         ) : (
           <Switch>
             <Route path="/login" component={LoginPage} />

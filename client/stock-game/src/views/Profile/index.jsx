@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import API from "../../utils/API";
 import "./style.css";
-import Navbar from "../../components/Navbar/";
 
 export default function Profile() {
   const [userData, setUserData] = useState({
@@ -23,7 +22,6 @@ export default function Profile() {
   if (userData.isLoaded) {
     return (
       <>
-        <Navbar />
         <div className="profile_container">
           <div className="profile_heading_container">
             <h3>{userData.username}'s Profile</h3>
