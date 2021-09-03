@@ -1,4 +1,3 @@
-import ApexCharts from "apexcharts";
 import Chart from "react-apexcharts";
 
 export default function CandleStickChart(props) {

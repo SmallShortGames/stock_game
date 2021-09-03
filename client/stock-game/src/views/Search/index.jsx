@@ -1,4 +1,6 @@
-// To-do: limit start and end date by available data
+// To-do:   limit start and end date by available data
+//          add buy stock option
+//          limit data from axios call first
 
 import React, { useEffect, useState } from "react";
 import CandleStickChart from "../../components/CandleStickChart";
