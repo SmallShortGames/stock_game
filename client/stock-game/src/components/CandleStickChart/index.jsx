@@ -3,8 +3,7 @@ import Chart from "react-apexcharts";
 export default function CandleStickChart(props) {
   //filter Data by date
   const filteredData = props.data.filter((datum) => {
-    const startDate = new Date(props.start_date);
-    const endDate = new Date(props.end_date);
+    const { startDate, endDate } = props;
     const currentDate = new Date(datum.date_);
 
     return currentDate >= startDate && currentDate <= endDate;

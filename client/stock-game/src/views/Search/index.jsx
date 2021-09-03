@@ -3,6 +3,9 @@
 //          limit data from axios call first
 
 import React, { useEffect, useState } from "react";
+
+import Tabs from "react-bootstrap/Tabs";
+import Tab from "react-bootstrap/Tab";
 import CandleStickChart from "../../components/CandleStickChart";
 
 import API from "../../utils/API";
@@ -10,6 +13,9 @@ import API from "../../utils/API";
 import "./style.css";
 
 export default function Search() {
+  const startDate = new Date(Date.now());
+  const endDate = new Date();
+
   const [tickerState, setTickerState] = useState({
     data: [
       {
@@ -24,10 +30,6 @@ export default function Search() {
   });
   const [selectState, setSelectState] = useState("");
   const [searchState, setSearchState] = useState(null);
-  const [dateState, setDateState] = useState({
-    start_date: "",
-    end_date: "",
-  });
 
   useEffect(() => {
     API.getStockTickers().then((response) => {
@@ -50,21 +52,42 @@ export default function Search() {
     setSelectState(value);
   }
 
-  function handleDateChange(event) {
-    const { name, value } = event.target;
-    setDateState({ ...dateState, [name]: value });
-  }
-
   function SearchResult() {
     if (searchState != null) {
       return (
         <>
-          <CandleStickChart
-            data={searchState.data}
-            name={searchState.data[0].co_name}
-            start_date={dateState.start_date}
-            end_date={dateState.end_date}
-          />
+          <Tabs
+            defaultActiveKey="1day"
+            id="uncontrolled-tab-example"
+            className="mb-3"
+          >
+            <Tab eventKey="1day" title="1 Day">
+              <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={startDate}
+                startDate={endDate.setDate(endDate.getTime() - 1)}
+              />
+            </Tab>
+            <Tab eventKey="5days" title="5 Days">
+              2
+            </Tab>
+            <Tab eventKey="1month" title="1 Month">
+              3
+            </Tab>
+            <Tab eventKey="6months" title="6 Months">
+              4
+            </Tab>
+            <Tab eventKey="ytd" title="YTD">
+              5
+            </Tab>
+            <Tab eventKey="1year" title="1 Year">
+              6
+            </Tab>
+            <Tab eventKey="5years" title="5 Years">
+              7
+            </Tab>
+          </Tabs>
         </>
       );
     } else {
@@ -93,24 +116,6 @@ export default function Search() {
                     );
                   })}
                 </select>
-              </label>
-              <label htmlFor="start_date">
-                Start date:{" "}
-                <input
-                  type="date"
-                  name="start_date"
-                  id="start_date"
-                  onChange={handleDateChange}
-                />
-              </label>
-              <label htmlFor="end_date">
-                End date:{" "}
-                <input
-                  type="date"
-                  name="end_date"
-                  id="end_date"
-                  onChange={handleDateChange}
-                />
               </label>
               <input type="submit" value="Search" />
             </form>
