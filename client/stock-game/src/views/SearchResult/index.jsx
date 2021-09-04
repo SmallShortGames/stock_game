@@ -1,6 +1,8 @@
+import { Link } from "react-router-dom";
 import { Tab, Tabs } from "react-bootstrap";
-import CandleStickChart from "../CandleStickChart";
+import CandleStickChart from "../../components/CandleStickChart";
 import { sub, setDayOfYear } from "date-fns";
+import "./style.css";
 
 export default function SearchResult({
   data: { data },
@@ -76,10 +78,26 @@ export default function SearchResult({
 
   return (
     <>
-      <h3>Market Summary: {co_name}</h3>
-      <p>NASDAQ: {ticker}</p>
-      <p>Sector: {sector}</p>
-      <p>{data[data.length - 1].daily_close} USD</p>
+      <div className="split">
+        <div className="stock-title-info">
+          <h3>Market Summary: {co_name}</h3>
+          <p>NASDAQ: {ticker}</p>
+          <p>Sector: {sector}</p>
+          <p>{data[data.length - 1].daily_close} USD</p>
+        </div>
+        <div className="trade-link">
+          <button>
+            <Link
+              to={{
+                pathname: "/trade",
+                state: { ticker },
+              }}
+            >
+              Trade
+            </Link>
+          </button>
+        </div>
+      </div>
       <Tabs
         defaultActiveKey={chartsTabs[0].key}
         id="uncontrolled-tab-example"

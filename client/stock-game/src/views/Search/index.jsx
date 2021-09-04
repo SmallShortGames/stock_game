@@ -1,7 +1,7 @@
 // To-do:  add buy stock option
 
 import React, { useEffect, useState } from "react";
-import SearchResult from "../../components/SearchResult";
+import SearchResult from "../SearchResult";
 import API from "../../utils/API";
 import "./style.css";
 
@@ -18,7 +18,7 @@ export default function Search() {
     message: "",
     isLoaded: false,
   });
-  const [selectState, setSelectState] = useState("");
+  const [selectState, setSelectState] = useState(null);
   const [searchState, setSearchState] = useState(null);
 
   useEffect(() => {
@@ -30,16 +30,23 @@ export default function Search() {
   function handleSearchSubmit(event) {
     event.preventDefault();
 
-    API.getStockData(selectState.ticker)
-      .then((response) => {
-        setSearchState(response.data);
-      })
-      .catch((err) => console.log(err));
+    if (selectState) {
+      API.getStockData(selectState.ticker)
+        .then((response) => {
+          setSearchState(response.data);
+        })
+        .catch((err) => {
+          setSearchState(null);
+          console.log(err);
+        });
+    }
   }
 
   function handleSelectChange(event) {
     let { value } = event.target;
-    setSelectState(JSON.parse(value));
+    if (value) {
+      setSelectState(JSON.parse(value));
+    }
   }
 
   if (tickerState.isLoaded) {
@@ -54,7 +61,7 @@ export default function Search() {
               <label htmlFor="stock_search_query">
                 Company:
                 <select name="stock_search_query" onChange={handleSelectChange}>
-                  <option>-</option>
+                  <option value="">-</option>
                   {tickerState.data.map((company) => {
                     return (
                       <option value={JSON.stringify(company)} key={company.id}>
@@ -66,9 +73,9 @@ export default function Search() {
               </label>
               <input type="submit" value="Search" />
             </form>
-            {searchState && (
+            {searchState ? (
               <SearchResult data={searchState} titleData={selectState} />
-            )}
+            ) : null}
           </div>
         </div>
       </>
