@@ -30,7 +30,7 @@ export default function Search() {
   function handleSearchSubmit(event) {
     event.preventDefault();
 
-    API.getStockData(selectState)
+    API.getStockData(selectState.ticker)
       .then((response) => {
         setSearchState(response.data);
       })
@@ -39,7 +39,7 @@ export default function Search() {
 
   function handleSelectChange(event) {
     let { value } = event.target;
-    setSelectState(value);
+    setSelectState(JSON.parse(value));
   }
 
   if (tickerState.isLoaded) {
@@ -57,7 +57,7 @@ export default function Search() {
                   <option>-</option>
                   {tickerState.data.map((company) => {
                     return (
-                      <option value={company.ticker} key={company.id}>
+                      <option value={JSON.stringify(company)} key={company.id}>
                         {company.co_name}
                       </option>
                     );
@@ -66,7 +66,9 @@ export default function Search() {
               </label>
               <input type="submit" value="Search" />
             </form>
-            {searchState && <SearchResult data={searchState} />}
+            {searchState && (
+              <SearchResult data={searchState} titleData={selectState} />
+            )}
           </div>
         </div>
       </>

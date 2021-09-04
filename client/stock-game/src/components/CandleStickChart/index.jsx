@@ -14,10 +14,6 @@ export default function CandleStickChart(props) {
   ];
 
   const options = {
-    title: {
-      text: props.name,
-      align: "center",
-    },
     xaxis: {
       type: "datetime",
     },

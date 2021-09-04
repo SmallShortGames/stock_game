@@ -2,7 +2,10 @@ import { Tab, Tabs } from "react-bootstrap";
 import CandleStickChart from "../CandleStickChart";
 import { sub, setDayOfYear } from "date-fns";
 
-export default function SearchResult({ data: { data } }) {
+export default function SearchResult({
+  data: { data },
+  titleData: { co_name, ticker, sector },
+}) {
   function filterByDates(data, startDate) {
     return data.filter((datum) => {
       const currentDate = new Date(datum.date_);
@@ -73,6 +76,10 @@ export default function SearchResult({ data: { data } }) {
 
   return (
     <>
+      <h3>Market Summary: {co_name}</h3>
+      <p>NASDAQ: {ticker}</p>
+      <p>Sector: {sector}</p>
+      <p>{data[data.length - 1].daily_close} USD</p>
       <Tabs
         defaultActiveKey={chartsTabs[0].key}
         id="uncontrolled-tab-example"
