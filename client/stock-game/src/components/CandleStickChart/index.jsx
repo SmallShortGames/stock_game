@@ -4,8 +4,6 @@ export default function CandleStickChart(props) {
   //filter Data by date
   const filteredData = props.data.filter((datum) => {
     const { startDate, endDate } = props;
-    console.log(`start date ${startDate}
-    end date ${endDate}`);
     const currentDate = new Date(datum.date_);
 
     return (
