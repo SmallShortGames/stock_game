@@ -1,7 +1,8 @@
+// To-do:  add buy stock option
+
 import React, { useEffect, useState } from "react";
-
+import SearchResult from "../SearchResult";
 import API from "../../utils/API";
-
 import "./style.css";
 
 export default function Search() {
@@ -17,7 +18,7 @@ export default function Search() {
     message: "",
     isLoaded: false,
   });
-  const [selectState, setSelectState] = useState("");
+  const [selectState, setSelectState] = useState(null);
   const [searchState, setSearchState] = useState(null);
 
   useEffect(() => {
@@ -28,23 +29,23 @@ export default function Search() {
 
   function handleSearchSubmit(event) {
     event.preventDefault();
-    API.getStockData(selectState)
-      .then((response) => {
-        setSearchState(response.data);
-      })
-      .catch((err) => console.log(err));
+
+    if (selectState) {
+      API.getStockData(selectState.ticker)
+        .then((response) => {
+          setSearchState(response.data);
+        })
+        .catch((err) => {
+          setSearchState(null);
+          console.log(err);
+        });
+    }
   }
 
   function handleSelectChange(event) {
     let { value } = event.target;
-    setSelectState(value);
-  }
-
-  function SearchResult() {
-    if (searchState != null) {
-      return JSON.stringify(searchState.data[0]);
-    } else {
-      return null;
+    if (value) {
+      setSelectState(JSON.parse(value));
     }
   }
 
@@ -57,19 +58,24 @@ export default function Search() {
           </div>
           <div className="search_body_container">
             <form onSubmit={handleSearchSubmit}>
-              <select name="stock_search_query" onChange={handleSelectChange}>
-                <option>-</option>
-                {tickerState.data.map((company) => {
-                  return (
-                    <option value={company.ticker} key={company.id}>
-                      {company.co_name}
-                    </option>
-                  );
-                })}
-              </select>
+              <label htmlFor="stock_search_query">
+                Company:
+                <select name="stock_search_query" onChange={handleSelectChange}>
+                  <option value="">-</option>
+                  {tickerState.data.map((company) => {
+                    return (
+                      <option value={JSON.stringify(company)} key={company.id}>
+                        {company.co_name}
+                      </option>
+                    );
+                  })}
+                </select>
+              </label>
               <input type="submit" value="Search" />
             </form>
-            <SearchResult />
+            {searchState ? (
+              <SearchResult data={searchState} titleData={selectState} />
+            ) : null}
           </div>
         </div>
       </>

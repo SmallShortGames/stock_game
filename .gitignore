@@ -129,7 +129,7 @@ yarn-error.log*
 # package
 /dist
 # compiled css
-*.css
+# *.css
 venv/
 reactFlask/
 .env
