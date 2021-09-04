@@ -8,7 +8,7 @@ import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />,
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
@@ -19,7 +19,7 @@ ReactDOM.render(
 reportWebVitals();
 
 // by SmallShortGames, 2021
-// 
+//
 // remember to stay classy
 // .-----.
 // \ ' /   _/    )/
@@ -36,6 +36,6 @@ reportWebVitals();
 //         |(   \|
 //        _|_)__|_\_
 //        )...()...(
-//         | (   \ |     
+//         | (   \ |
 //      .-'__,)  (  \
 //  pjf           '\_-,
