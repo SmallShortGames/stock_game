@@ -13,9 +13,6 @@ import API from "../../utils/API";
 import "./style.css";
 
 export default function Search() {
-  const startDate = new Date(Date.now());
-  const endDate = new Date();
-
   const [tickerState, setTickerState] = useState({
     data: [
       {
@@ -31,6 +28,19 @@ export default function Search() {
   const [selectState, setSelectState] = useState("");
   const [searchState, setSearchState] = useState(null);
 
+  const endDate = searchState
+    ? new Date(searchState.data[searchState.data.length - 1].date_)
+    : null;
+
+  const startDates = {
+    oneDay: new Date(endDate),
+    fiveDay: new Date(endDate),
+    oneMonth: new Date(endDate),
+    sixMonth: new Date(endDate),
+    YTD: new Date(endDate),
+    oneYear: new Date(endDate),
+    fiveYear: new Date(endDate),
+  };
   useEffect(() => {
     API.getStockTickers().then((response) => {
       setTickerState({ ...response.data, isLoaded: true });
@@ -65,27 +75,62 @@ export default function Search() {
               <CandleStickChart
                 data={searchState.data}
                 name={searchState.data[0].co_name}
-                endDate={startDate}
-                startDate={endDate.setDate(endDate.getTime() - 1)}
+                endDate={endDate}
+                startDate={startDates.oneDay.setDate(endDate.getDate() - 1)}
               />
             </Tab>
             <Tab eventKey="5days" title="5 Days">
-              2
+              <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={endDate}
+                startDate={startDates.fiveDay.setDate(endDate.getDate() - 5)}
+              />
             </Tab>
             <Tab eventKey="1month" title="1 Month">
-              3
+              <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={endDate}
+                startDate={startDates.oneMonth.setMonth(endDate.getMonth() - 1)}
+              />
             </Tab>
             <Tab eventKey="6months" title="6 Months">
-              4
+              <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={endDate}
+                startDate={startDates.sixMonth.setMonth(endDate.getMonth() - 6)}
+              />
             </Tab>
             <Tab eventKey="ytd" title="YTD">
-              5
+              ... in progress
+              {/* <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={endDate}
+                startDate={startDates.YTD.setDate(1)}
+              /> */}
             </Tab>
             <Tab eventKey="1year" title="1 Year">
-              6
+              <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={endDate}
+                startDate={startDates.oneYear.setFullYear(
+                  endDate.getFullYear() - 1
+                )}
+              />
             </Tab>
             <Tab eventKey="5years" title="5 Years">
-              7
+              <CandleStickChart
+                data={searchState.data}
+                name={searchState.data[0].co_name}
+                endDate={endDate}
+                startDate={startDates.oneYear.setFullYear(
+                  endDate.getFullYear() - 5
+                )}
+              />
             </Tab>
           </Tabs>
         </>

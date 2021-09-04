@@ -4,9 +4,14 @@ export default function CandleStickChart(props) {
   //filter Data by date
   const filteredData = props.data.filter((datum) => {
     const { startDate, endDate } = props;
+    console.log(`start date ${startDate}
+    end date ${endDate}`);
     const currentDate = new Date(datum.date_);
 
-    return currentDate >= startDate && currentDate <= endDate;
+    return (
+      (currentDate > startDate && currentDate < endDate) ||
+      currentDate.getTime() === endDate.getTime()
+    );
   });
 
   // Prepare company data for ApexCharts
