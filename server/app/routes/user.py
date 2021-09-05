@@ -1,17 +1,17 @@
 from flask import Blueprint, request, make_response, jsonify, json, session
 from app.models import User, Portfolio, Position, Company, Transaction
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.tokens import encode_auth_token, decode_token
+from app.tokens import encode_auth_token, decode_token, token_required
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 
 
-@bp.route('/<user_id>', methods=["GET"])
-def user_profile(user_id):
+@bp.route('/', methods=["GET"])
+@token_required
+def user_profile(token):
     """User profile route for a central location for user stats and position data"""
-
     try:
-        user = User.User.objects(id=user_id).first()
+        user = User.User.objects(id=token.id).first()
         portfolio = Portfolio.Portfolio.objects(user_id=user.id).first()
     except AttributeError:
         print('error')
@@ -30,29 +30,32 @@ def user_profile(user_id):
 
 @bp.route('/login', methods=["POST"])
 def login():
-    """Login route checks to see if a users email exists then checks to verify password hash matches"""
+    """Login route checks to see if a users email
+    exists then checks to verify password hash matches"""
     email = request.json['email']
     password = request.json['password']
 
     try:
         exist_user = User.User.objects.filter(email=email).first()
-        print(exist_user.email)
     except AttributeError:
         print("error")
     else:
+        token = encode_auth_token({'id': str(exist_user.id), 'email': exist_user.email})
         if exist_user is None:
             return {'data': None, 'message': 'User not found'}, 401
         elif not check_password_hash(exist_user.password, password):
             return {'data': None, 'message': 'Unauthorized'}, 401
         else:
-            return {
+            resp = make_response({
                 'data': {
                     'id': str(exist_user.id),
                     'username': exist_user.username,
                     'email': exist_user.email
                 },
                 'message': 'success!'
-            }, 200
+            })
+            resp.headers['x-access-tokens'] = token
+            return resp, 200
 
 
 @bp.route('/register', methods=["POST"])
