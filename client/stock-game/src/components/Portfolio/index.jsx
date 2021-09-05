@@ -5,8 +5,20 @@ import Tab from "react-bootstrap/Tab";
 export default function Portfolio({
   data: { balance, positions, transactions },
 }) {
-  const positionHeadings = Object.keys(positions[0]);
-  const transactionHeadings = Object.keys(transactions[0]);
+  const positionMap = {
+    _id: "company name",
+    company_ticker: "symbol",
+    avg_cost: "average cost",
+    quantity: "quantity",
+  };
+  const positionHeadings = Object.keys(positionMap);
+  const transactionMap = {
+    buy_side: "side",
+    company: "company",
+    price: "price",
+    quantity: "quantity",
+  };
+  const transactionHeadings = Object.keys(transactionMap);
   return (
     <>
       <Tabs>
@@ -15,7 +27,7 @@ export default function Portfolio({
             <thead>
               <tr>
                 {positionHeadings.map((key) => {
-                  return <th>{key}</th>;
+                  return <th>{positionMap[key]}</th>;
                 })}
               </tr>
             </thead>
@@ -24,7 +36,7 @@ export default function Portfolio({
                 return (
                   <tr>
                     {positionHeadings.map((key) => {
-                      return <td>{JSON.stringify(position[key])}</td>;
+                      return <td>{position[key]}</td>;
                     })}
                   </tr>
                 );
@@ -37,7 +49,7 @@ export default function Portfolio({
             <thead>
               <tr>
                 {transactionHeadings.map((key) => {
-                  return <th>{key}</th>;
+                  return <th>{transactionMap[key]}</th>;
                 })}
               </tr>
             </thead>
@@ -46,7 +58,11 @@ export default function Portfolio({
                 return (
                   <tr>
                     {transactionHeadings.map((key) => {
-                      return <td>{JSON.stringify(transaction[key])}</td>;
+                      if (key !== "buy_side") {
+                        return <td>{transaction[key]}</td>;
+                      } else {
+                        return transaction[key] ? <td>buy</td> : <td>sell</td>;
+                      }
                     })}
                   </tr>
                 );
