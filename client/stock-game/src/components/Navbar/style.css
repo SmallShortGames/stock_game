@@ -1,0 +1,9 @@
+.navbar_list {
+  list-style: none;
+  display: flex;
+  justify-content: space-around;
+}
+
+.navbar_wrapper {
+  padding: 1.5em 0;
+}

@@ -36,15 +36,15 @@ export default function LoginForm() {
       email: data.email,
       password: data.password,
     };
-    console.log(temp);
     API.userLogin(temp)
       .then((res) => {
         if (res.statusText === "OK" || res.status === 200) {
           dispatch({ type: "LOGIN", payload: res.data.data });
+        } else {
+          throw res;
         }
-        throw res;
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error(err));
   }
 
   return (

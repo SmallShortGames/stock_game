@@ -39,7 +39,7 @@ def buy():
                 break
         existing_port.save()
 
-    update_p = Porfolio.Portfolio.objects.filter(user_id=user_id).update(
+    update_p = Portfolio.Portfolio.objects.filter(user_id=user_id).update(
         add_to_set__transactions=new_transaction, dec__balance=cost, updated_at=updated_date)
     update_u = User.User.objects.filter(
         id=user_id).update(dec__operating_income=cost, updated_at=updated_date)

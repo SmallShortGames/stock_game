@@ -6,6 +6,7 @@ import "../src/assets/css/custom.scss";
 
 import DashboardLayout from "./layouts/DashboardLayout";
 
+import Trade from "./views/Trade";
 import MainPage from "./views/MainPage/MainPage.js";
 import TestPage from "./views/TestPage/TestPage.js";
 import LoginPage from "./views/LoginPage/LoginPage.js";
@@ -57,6 +58,7 @@ export default function App() {
               <Route path="/profile" component={Profile} />
               <Route path="/search" component={Search} />
               <Route path="/test" component={TestPage} />
+              <Route path="/trade" component={Trade} />
               <Route path="/*" component={MainPage} />
             </Switch>
           </DashboardLayout>

@@ -5,8 +5,16 @@ const API = {
     return axios.get("api/stocks");
   },
   getStockData: function (ticker) {
-    const path = "/api/viewstock/" + ticker;
+    const path = "api/viewstock/" + ticker;
     return axios.get(path);
+  },
+  tradeBuy: function (options) {
+    const path = "api/buy";
+    return axios.put(path, options);
+  },
+  tradeSell: function (options) {
+    const path = "api/sell";
+    return axios.put(path, options);
   },
   userData: function (userID) {
     const path = "user/" + userID;
