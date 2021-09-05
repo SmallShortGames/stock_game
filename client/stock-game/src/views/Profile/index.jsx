@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Portfolio from "../../components/Portfolio";
 import API from "../../utils/API";
 import "./style.css";
 
@@ -29,7 +30,7 @@ export default function Profile() {
           <div className="profile_body_container">
             <p>Total equity: {userData.total_equity}</p>
             <p>Gross Profit: {userData.gross_profit}</p>
-            <p>Portfolio: {JSON.stringify(userData.portfolio)}</p>
+            <Portfolio data={userData.portfolio} />
           </div>
         </div>
       </>
