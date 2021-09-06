@@ -50,7 +50,7 @@ def login():
                 'data': {
                     'id': str(exist_user.id),
                     'username': exist_user.username,
-                    'email': exist_user.email
+                    'email': exist_user.email,
                 },
                 'message': 'success!'
             })

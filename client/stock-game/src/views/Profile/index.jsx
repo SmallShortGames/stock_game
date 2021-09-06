@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import Portfolio from "../../components/Portfolio";
 import API from "../../utils/API";
 import "./style.css";
+import { AuthContext } from "../../App";
 
 export default function Profile() {
+  const {
+    state: { token },
+  } = useContext(AuthContext);
+
   const [userData, setUserData] = useState({
     id: "",
     username: "",
@@ -14,10 +19,11 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    const userID = JSON.parse(localStorage.getItem("user"));
-    API.userData(userID).then((response) => {
-      setUserData({ ...response.data.data, isLoaded: true });
-    });
+    API.userData(token)
+      .then((response) => {
+        setUserData({ ...response.data.data, isLoaded: true });
+      })
+      .catch((err) => console.error(err));
   }, []);
 
   if (userData.isLoaded) {
