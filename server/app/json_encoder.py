@@ -1,5 +1,6 @@
 from sqlalchemy.ext.declarative import DeclarativeMeta
 from flask import json
+from bson import ObjectId
 import decimal
 
 
@@ -18,4 +19,6 @@ class CompanyJsonEncoder(json.JSONEncoder):
             return d
         elif type(o) is decimal.Decimal:
             return float(o)
+        elif isinstance(o, ObjectId):
+            return str(o)
         return json.JSONEncoder.default(self, o)

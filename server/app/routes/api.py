@@ -4,19 +4,23 @@ from app.db import Session
 from sqlalchemy import select
 from sqlalchemy.exc import IntegrityError
 from datetime import datetime
+from app.tokens import encode_token, decode_token, token_required
 
 bp = Blueprint('api', __name__, url_prefix='/api')
 db = Session()
 
 
 @bp.route('/buy', methods=['PUT'])
-def buy():
+@token_required
+def buy(token):
     """Buy route will embed a transaction document within the portfolio class along with either embedding a new position document or updating an existing position"""
     user_id = request.json['id']  # user id
     company = request.json['company']  # company ticker
     cost = request.json['cost']  # total cost
     quantity = request.json['quantity']  # desired int
 
+    if str(token.id) != user_id:
+        return {'data': '', 'message': 'Server Error please try again later.'}, 400
     # query is a work in progress
     updated_date = datetime.utcnow
     res = db.query(Company.Company).filter_by(ticker=company).first()
@@ -49,7 +53,7 @@ def buy():
 
     return {
         'data': {
-            'id': str(user.id),
+            'id': user.id,
             'username': user.username,
             'gross_profit': user.gross_profit,
             'total_equity': user.total_equity,
@@ -60,13 +64,16 @@ def buy():
 
 
 @bp.route('/sell', methods=['PUT'])
-def sell():
+@token_required
+def sell(token):
     """Sell route will subtract the quantity of the given stock and embed a new transaction document within the portfolio"""
     user_id = request.json['id']  # user id
     company = request.json['company']  # company ticker
     cost = request.json['cost']  # total cost
     quantity = request.json['quantity']  # desired int
 
+    if str(token.id) != user_id:
+        return {'data': '', 'message': 'Server Error please try again later.'}, 400
     # query is a work in progress
     updated_date = datetime.utcnow
     res = db.query(Company).filter_by(ticker=company).first()
@@ -100,7 +107,7 @@ def sell():
 
     return {
         'data': {
-            'id': str(user.id),
+            'id': user.id,
             'username': user.username,
             'gross_profit': user.gross_profit,
             'total_equity': user.total_equity,

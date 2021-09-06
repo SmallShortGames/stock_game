@@ -7,7 +7,7 @@ import datetime
 import os
 
 
-def encode_auth_token(user):
+def encode_token(user):
     try:
         payload = {
             'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=2),

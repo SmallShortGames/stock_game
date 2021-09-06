@@ -1,7 +1,7 @@
 from flask import Blueprint, request, make_response, jsonify, json, session
 from app.models import User, Portfolio, Position, Company, Transaction
 from werkzeug.security import check_password_hash, generate_password_hash
-from app.tokens import encode_auth_token, decode_token, token_required
+from app.tokens import encode_token, decode_token, token_required
 
 bp = Blueprint('user', __name__, url_prefix='/user')
 
@@ -18,7 +18,7 @@ def user_profile(token):
     else:
         return {
             'data': {
-                'id': str(user.id),
+                'id': user.id,
                 'username': user.username,
                 'gross_profit': user.gross_profit,
                 'total_equity': user.total_equity,
@@ -40,7 +40,7 @@ def login():
     except AttributeError:
         print("error")
     else:
-        token = encode_auth_token({'id': str(exist_user.id), 'email': exist_user.email})
+        token = encode_token({'id': str(exist_user.id), 'email': exist_user.email})
         if exist_user is None:
             return {'data': None, 'message': 'User not found'}, 401
         elif not check_password_hash(exist_user.password, password):
@@ -48,7 +48,7 @@ def login():
         else:
             resp = make_response({
                 'data': {
-                    'id': str(exist_user.id),
+                    'id': exist_user.id,
                     'username': exist_user.username,
                     'email': exist_user.email
                 },
@@ -81,7 +81,7 @@ def register():
     else:
         return {
             'data': {
-                'id': str(user.id),
+                'id': user.id,
                 'username': user.username,
                 'email': user.email
             },
