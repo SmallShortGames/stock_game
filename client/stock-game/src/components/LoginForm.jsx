@@ -38,8 +38,15 @@ export default function LoginForm() {
     };
     API.userLogin(temp)
       .then((res) => {
+        console.log("res", res);
         if (res.statusText === "OK" || res.status === 200) {
-          dispatch({ type: "LOGIN", payload: res.data.data });
+          dispatch({
+            type: "LOGIN",
+            payload: {
+              data: res.data.data,
+              token: res.headers["x-access-tokens"],
+            },
+          });
         } else {
           throw res;
         }

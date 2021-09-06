@@ -8,17 +8,29 @@ const API = {
     const path = "api/viewstock/" + ticker;
     return axios.get(path);
   },
-  tradeBuy: function (options) {
+  getStockDataOne: function (ticker) {
+    const path = "api/viewstock/" + ticker;
+    return axios.get(path, { params: { _limit: 1 } });
+  },
+  tradeBuy: function (options, token) {
     const path = "api/buy";
-    return axios.put(path, options);
+    return axios.put(path, options, {
+      headers: {
+        "x-access-tokens": token,
+      },
+    });
   },
   tradeSell: function (options) {
     const path = "api/sell";
     return axios.put(path, options);
   },
-  userData: function (userID) {
-    const path = "user/" + userID;
-    return axios.get(path);
+  userData: function (token) {
+    const path = "user/";
+    return axios.get(path, {
+      headers: {
+        "x-access-tokens": token,
+      },
+    });
   },
   userLogin: function (user) {
     return axios.post("user/login", user);
