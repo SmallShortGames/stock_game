@@ -20,12 +20,12 @@ export default function Navbar() {
     <>
       <div className="navbar_wrapper">
         <div
-          class={openState ? "hamburger active" : "hamburger"}
+          className={openState ? "hamburger active" : "hamburger"}
           onClick={handleMenuClick}
         >
-          <div class="hamburger-line hamburger-line-top"></div>
-          <div class="hamburger-line hamburger-line-middle"></div>
-          <div class="hamburger-line hamburger-line-bottom"></div>
+          <div className="hamburger-line hamburger-line-top"></div>
+          <div className="hamburger-line hamburger-line-middle"></div>
+          <div className="hamburger-line hamburger-line-bottom"></div>
         </div>
         <ul className={openState ? "active" : null}>
           <li>
