@@ -71,6 +71,7 @@
   background-color: var(--clr-bg-lavender);
   transition: all 250ms ease-in;
   z-index: 5;
+  padding-left: 0; /* overrides a default */
 }
 
 .navbar_wrapper > ul.active {

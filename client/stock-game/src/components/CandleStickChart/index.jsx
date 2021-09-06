@@ -1,5 +1,5 @@
 import Chart from "react-apexcharts";
-
+import "./style.css";
 export default function CandleStickChart(props) {
   // Prepare company data for ApexCharts
   const seriesdata = [
