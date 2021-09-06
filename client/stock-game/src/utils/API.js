@@ -12,9 +12,13 @@ const API = {
     const path = "api/viewstock/" + ticker;
     return axios.get(path, { params: { _limit: 1 } });
   },
-  tradeBuy: function (options) {
+  tradeBuy: function (options, token) {
     const path = "api/buy";
-    return axios.put(path, options);
+    return axios.put(path, options, {
+      headers: {
+        "x-access-tokens": token,
+      },
+    });
   },
   tradeSell: function (options) {
     const path = "api/sell";
@@ -29,7 +33,7 @@ const API = {
     });
   },
   userLogin: function (user) {
-    return axios.post("user/login");
+    return axios.post("user/login", user);
   },
   userRegister: function (user) {
     return axios.post("user/register", user);
