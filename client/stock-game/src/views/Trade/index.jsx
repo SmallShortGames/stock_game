@@ -1,13 +1,15 @@
 import API from "../../utils/API";
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../../App";
 import "./style.css";
 
 export default function Trade(props) {
   const { ticker } = props.location.state;
+  const { state } = useContext(AuthContext);
 
   const [orderState, setOrderState] = useState({
     side: "",
-    id: JSON.parse(localStorage.getItem("user")),
+    id: state.id,
     company: ticker,
     price: 0,
     quantity: 0,
@@ -22,7 +24,7 @@ export default function Trade(props) {
       quantity: +orderState.quantity,
     };
     if (orderState.side === "buy") {
-      API.tradeBuy(tradeOptions)
+      API.tradeBuy(tradeOptions, state.token)
         .then(() => {
           props.history.push("/profile");
         })

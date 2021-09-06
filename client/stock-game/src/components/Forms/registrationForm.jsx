@@ -26,7 +26,13 @@ export default function RegistrationForm() {
     API.userRegister(registrationState)
       .then((response) => {
         if (response.status === "201") {
-          dispatch({ type: "LOGIN", payload: response.data.data });
+          dispatch({
+            type: "LOGIN",
+            payload: {
+              data: response.data.data,
+              token: response.headers["x-access-tokens"],
+            },
+          });
         } else {
           console.log(response);
         }
