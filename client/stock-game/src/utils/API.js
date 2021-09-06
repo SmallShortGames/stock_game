@@ -8,6 +8,10 @@ const API = {
     const path = "api/viewstock/" + ticker;
     return axios.get(path);
   },
+  getStockDateOne: function (ticker) {
+    const path = "api/viewstock/" + ticker;
+    return axios.get(path, { params: { _limit: 1 } });
+  },
   tradeBuy: function (options) {
     const path = "api/buy";
     return axios.put(path, options);
