@@ -5,7 +5,7 @@ import { AuthContext } from "../../App";
 
 import "./style.css";
 
-export default function MenuBar() {
+export default function Navbar() {
   const { dispatch } = React.useContext(AuthContext);
   const [openState, setOpenState] = useState(false);
 
