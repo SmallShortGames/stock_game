@@ -34,7 +34,7 @@ export default function Portfolio({
             <tbody>
               {positions.map((position) => {
                 return (
-                  <tr>
+                  <tr key={"posn" + JSON.stringify(position.created_at)}>
                     {positionHeadings.map((key) => {
                       return <td>{position[key]}</td>;
                     })}
@@ -56,7 +56,7 @@ export default function Portfolio({
             <tbody>
               {transactions.map((transaction) => {
                 return (
-                  <tr>
+                  <tr key={"txn" + JSON.stringify(transaction.created_at)}>
                     {transactionHeadings.map((key) => {
                       if (key !== "buy_side") {
                         return <td>{transaction[key]}</td>;
