@@ -13,7 +13,7 @@ def user_profile(token):
     try:
         user = User.User.objects(id=token.id).first()
         portfolio = Portfolio.Portfolio.objects(user_id=user.id).first()
-    except AttributeError:
+    except:
         print('error')
     else:
         return {
@@ -37,7 +37,7 @@ def login():
 
     try:
         exist_user = User.User.objects.filter(email=email).first()
-    except AttributeError:
+    except:
         print("error")
     else:
         token = encode_token({'id': str(exist_user.id), 'email': exist_user.email})
@@ -54,6 +54,7 @@ def login():
                 },
                 'message': 'success!'
             })
+            print(resp)
             resp.headers['x-access-tokens'] = token
             return resp, 200
 
@@ -76,7 +77,7 @@ def register():
         new_user.save()
         user = User.User.objects.filter(email=email).first()
         Portfolio.Portfolio(balance=user.operating_income, user_id=user).save()
-    except IntegrityError:
+    except:
         return {'data': None, 'message': 'Email already exists'}, 401
     else:
         return {

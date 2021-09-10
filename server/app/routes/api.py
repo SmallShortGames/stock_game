@@ -13,7 +13,8 @@ db = Session()
 @bp.route('/buy', methods=['PUT'])
 @token_required
 def buy(token):
-    """Buy route will embed a transaction document within the portfolio class along with either embedding a new position document or updating an existing position"""
+    """Buy route will embed a transaction document within the portfolio class along
+    with either embedding a new position document or updating an existing position"""
     user_id = request.json['id']  # user id
     company = request.json['company']  # company ticker
     cost = request.json['cost']  # total cost
@@ -66,7 +67,8 @@ def buy(token):
 @bp.route('/sell', methods=['PUT'])
 @token_required
 def sell(token):
-    """Sell route will subtract the quantity of the given stock and embed a new transaction document within the portfolio"""
+    """Sell route will subtract the quantity of the given stock and embed a new
+    transaction document within the portfolio"""
     user_id = request.json['id']  # user id
     company = request.json['company']  # company ticker
     cost = request.json['cost']  # total cost
