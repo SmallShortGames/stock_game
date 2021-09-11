@@ -36,7 +36,7 @@ connect(host=db_url)
 #     from .routes import user
 #     app.register_blueprint(user.bp)
 
-#     from .routes.api import stocks
+#     from .routes import stocks
 #     app.register_blueprint(stocks.bp)
 
 #     return app

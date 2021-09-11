@@ -3,17 +3,14 @@ from datetime import datetime
 from app.models import User, Position, Transaction
 
 
-'''
-This model collates data pertaining to status of each user's complete portfolio;
-- 'balance' is required and limited to 15 digits, with two digits following the decimal point
-- 'portfolio_name' is a required, user-provided property and limited to between 2 and 50 characters
-- there is a MANY to ONE relationship between portfolio and user
-- 'portfolio' has ONE to MANY relationships with 'company', 'position', and 'transaction'
-'''
-
-
 class Portfolio(Document):
-    # portfolio_name = StringField(max_length=50, required=True)
+    '''
+    This model collates data pertaining to status of each user's complete portfolio;
+    - 'balance' is required and limited to 15 digits, with two digits following the decimal point
+    - 'portfolio_name' is a required, user-provided property and limited to between 2 and 50 characters
+    - there is a MANY to ONE relationship between portfolio and user
+    - 'portfolio' has ONE to MANY relationships with 'company', 'position', and 'transaction'
+    '''
     balance = DecimalField(max_length=15, precision=2, nullable=False)
     user_id = ReferenceField('User')
     positions = ListField(EmbeddedDocumentField('Position'))
